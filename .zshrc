@@ -118,7 +118,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
-
+if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
 
 
 
@@ -134,3 +134,9 @@ alias gst='git status'
 alias gco='git checkout'
 alias gf='git fetch'
 alias gc='git commit'
+
+PATH="/Users/mnaga/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/mnaga/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/mnaga/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/mnaga/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/mnaga/perl5"; export PERL_MM_OPT;
