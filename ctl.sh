@@ -1,8 +1,9 @@
 #!/bin/sh
 
+DIR=~/dotfile/.zsh
 if [ ! -d $DIR ];then
-	mkdir ~/.zsh
-	cd ~/.zsh
+	mkdir $DIR
+	cd $DIR
 	curl -o git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 	curl -o git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 	curl -o _git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
