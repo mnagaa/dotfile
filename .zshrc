@@ -1,11 +1,12 @@
 
 #======================================
 # setting path
-
+export PATH="$PATH:/opt/homebrew/bin/"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # ==========================================
 # 1) .zshenv
@@ -132,8 +133,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
-if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
+# eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+# if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
 
 
 
