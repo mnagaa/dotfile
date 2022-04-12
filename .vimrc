@@ -1,6 +1,6 @@
 " =======================
-"    .vimrc
-" I use macvim in my mac
+" .vimrc
+" use macvim in my mac
 " > brew install macvim
 "
 " add below
@@ -62,7 +62,7 @@ endif
 
 " The setting for NERDTree
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 
 "==============================================================
@@ -285,10 +285,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/vim-easy-align'
 
     " Any valid git URL is allowed
-    Plug 'junegunn/vim-github-dashboard' 
+    Plug 'junegunn/vim-github-dashboard'
 
     " Multiple Plug commands can be written in a single line using | separators
-    " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' 
+    " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
     " On-demand loading
     Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -354,7 +354,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'hynek/vim-python-pep8-indent'
     Plug 'Townk/vim-autoclose'
     " NERDTree
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
+    " Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 
 	if OSTYPE == "Darwin\n"
 		" mac 向けの設定
@@ -513,7 +515,7 @@ inoremap <Right> <Nop>
 "   this sometimes happens recursive mapping.
 "   Recomending the below command.
 " nnoremap
-"   e.g., 
+"   e.g.,
 "   nnoremap
 "
 " マップコマンドに関する情報

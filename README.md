@@ -2,8 +2,12 @@
 
 ## Mac OS
 
-> bash ctl_mac.sh
+```shell
+bash ctl_mac.sh
+```
 
 ## Linux
 
-> bash ctl_linux.sh
+```shell
+bash ctl_linux.sh
+```
