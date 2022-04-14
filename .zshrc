@@ -8,6 +8,9 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+# docker with lima
+export DOCKER_HOST='tcp://127.0.0.1:2375'
+
 # ==========================================
 # 1) .zshenv
 # 2) .zprofile
