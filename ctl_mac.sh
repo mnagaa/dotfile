@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 CURRENT_DIR=$PWD
 ZSH_DIR=$CURRENT_DIR/.zsh
@@ -16,7 +16,7 @@ cd $CURRENT_DIR
 echo "[start]: setup synbolic links"
 for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc
 do
-	echo "unlink synbolic links: $DIR"
+	echo "    unlink synbolic links: $DIR"
 	unlink ~/$DIR
 done
 echo "[completed]: unlink synbolic links"
@@ -24,7 +24,7 @@ echo "[completed]: unlink synbolic links"
 echo "[start]: setup synbolic links"
 for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc
 do
-	echo "set synbolic links: $DIR"
+	echo "    set synbolic links: $DIR"
 	ln -s $CURRENT_DIR/$DIR ~/$DIR
 done
 echo "[completed]: link synbolic links"

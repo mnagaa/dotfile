@@ -22,6 +22,7 @@ export DOCKER_HOST='tcp://127.0.0.1:2375'
 # scriptが長くなったときに実行する
 # ==========================================
 # zplugが無ければインストール
+
 if [[ ! -d $HOME/.zplug ]];then
   git clone https://github.com/zplug/zplug $HOME/dotfile/.zplug
   ln -s ~/dotfile/.zplug ~/.zplug
@@ -31,10 +32,10 @@ fi
 source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-# theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
+# theme: https://github.com/unixorn/awesome-zsh-plugins#themes
+# theme (https://github.com/sindresorhus/pure#zplug)
 
-# zplug "mafredri/zsh-async"
-# zplug "sindresorhus/pure"
+zplug "mafredri/zsh-async"
 
 # 構文のハイライト(https://github.com/zsh-users/zsh-syntax-highlighting)
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -118,44 +119,15 @@ GIT_PS1_SHOWUPSTREAM=auto
 setopt PROMPT_SUBST ; PS1='%F{green}%n@%m%f: %F{cyan}%~%f %F{red}$(__git_ps1 "(%s)")%f
 \$ '
 
-# IF anaconda is built on pyenv, conda setting can be done with below.
-# Something wrong with your conda environment, you should input 'conda init'
-# on your terminal.
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/masa/.pyenv/versions/anaconda3-2019.10/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/masa/.pyenv/versions/anaconda3-2019.10/etc/profile.d/conda.sh" ]; then
-        . "/Users/masa/.pyenv/versions/anaconda3-2019.10/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/masa/.pyenv/versions/anaconda3-2019.10/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
-# if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
-
-
-
 alias ls='ls -G'
 alias ll='ls -alF'
 alias g='git'
 alias ga='git add'
 alias gd='git diff'
-alias gs='git status'
 alias gp='git push'
 alias gb='git branch'
+alias gsw='git switch'
 alias gst='git status'
 alias gco='git checkout'
 alias gf='git fetch'
 alias gc='git commit'
-
-PATH="/Users/mnaga/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/mnaga/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/mnaga/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/mnaga/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/mnaga/perl5"; export PERL_MM_OPT;

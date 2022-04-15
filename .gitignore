@@ -1,4 +1,7 @@
 .zplug/
 .fzf/
 .zsh/
-.vim/
+.vim/**
+
+
+!.gitkeep
