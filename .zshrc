@@ -11,6 +11,9 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 # docker with lima
 export DOCKER_HOST='tcp://127.0.0.1:2375'
 
+# python setup
+export PYTHONPATH="$PWD:$PYTHONPATH"
+
 # ==========================================
 # 1) .zshenv
 # 2) .zprofile
@@ -49,9 +52,9 @@ zplug "chrissicool/zsh-256color"
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
-    if read -q; then
+    # if read -q; then
         echo; zplug install
-    fi
+    # fi
 fi
 # Then, source plugins and add commands to $PATH
 zplug load
