@@ -7,9 +7,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # docker with lima
-export DOCKER_HOST='tcp://127.0.0.1:2375'
+# export DOCKER_HOST='tcp://127.0.0.1:2375'
+export DOCKER_HOST=unix://$HOME/.lima/lima/sock/docker.sock
 
 # python setup
 export PYTHONPATH="$PWD:$PYTHONPATH"
