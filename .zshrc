@@ -9,7 +9,7 @@ eval "$(pyenv init -)"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # docker with lima
-export DOCKER_HOST='tcp://127.0.0.1:2375'
+# export DOCKER_HOST='tcp://127.0.0.1:2375'
 
 # ==========================================
 # 1) .zshenv
@@ -121,6 +121,7 @@ setopt PROMPT_SUBST ; PS1='%F{green}%n@%m%f: %F{cyan}%~%f %F{red}$(__git_ps1 "(%
 
 alias ls='ls -G'
 alias ll='ls -alF'
+
 alias g='git'
 alias ga='git add'
 alias gd='git diff'
