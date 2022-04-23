@@ -1,19 +1,6 @@
-
-#======================================
-# setting path
-export PATH="$PATH:/opt/homebrew/bin/"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# docker with lima
-# https://zenn.dev/matsukaz/articles/31bc31ff1c54b4
-# export DOCKER_HOST=unix://$HOME/.lima/lima/sock/docker.sock
-
 # python setup
 export PYTHONPATH="$PWD:$PYTHONPATH"
+eval "$(pyenv init -)"
 
 # ==========================================
 # 1) .zshenv
@@ -137,3 +124,6 @@ alias gco='git checkout'
 alias gf='git fetch'
 alias gc='git commit'
 alias greset_soft='git reset --soft HEAD^'
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
