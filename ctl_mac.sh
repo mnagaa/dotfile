@@ -37,3 +37,11 @@ if [ ! -d molokai ]; then
 else
 	echo "Install molokai is skipped."
 fi
+
+
+# node
+if [ ! -d ~/.nodenv ]; then
+	git clone git://github.com/nodenv/nodenv.git
+else
+	echo "Install nodeenv is skipped."
+fi
