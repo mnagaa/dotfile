@@ -14,7 +14,7 @@ fi
 cd $CURRENT_DIR
 
 echo "[start]: setup synbolic links"
-for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc
+for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc .p10k.zsh
 do
 	echo "    unlink synbolic links: $DIR"
 	unlink ~/$DIR
@@ -22,7 +22,7 @@ done
 echo "[completed]: unlink synbolic links"
 
 echo "[start]: setup synbolic links"
-for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc
+for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc .p10k.zsh
 do
 	echo "    set synbolic links: $DIR"
 	ln -s $CURRENT_DIR/$DIR ~/$DIR
