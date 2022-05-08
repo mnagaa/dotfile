@@ -348,45 +348,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'nathanaelkane/vim-indent-guides'
     Plug 'nvie/vim-flake8'
 
-    " これは入れない方が良い(2020/10/14
-    " Plug 'davidhalter/jedi-vim'
-
     Plug 'hynek/vim-python-pep8-indent'
     Plug 'Townk/vim-autoclose'
     " NERDTree
     " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
     " Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
-
-	if OSTYPE == "Darwin\n"
-		" mac 向けの設定
-		" https://github.com/vim-airline/vim-airline/wiki/Screenshots
-		Plug 'vim-airline/vim-airline'
-		Plug 'vim-airline/vim-airline-themes'
-		let g:airline_powerline_fonts = 1
-		let g:airline#extensions#tabline#enabled = 1
-		let g:airline#extensions#tabline#buffer_nr_show = 1
-		let g:airline#extensions#tabline#buffer_idx_mode = 1
-		let g:airline#extensions#tabline#buffer_idx_format = {
-			\ '0': '0 ',
-			\ '1': '1 ',
-			\ '2': '2 ',
-			\ '3': '3 ',
-			\ '4': '4 ',
-			\ '5': '5 ',
-			\ '6': '6 ',
-			\ '7': '7 ',
-			\ '8': '8 ',
-			\ '9': '9 '
-			\}
-		let g:airline_theme = 'papercolor'
-		" Make sure you use single quotes
-		Plug 'ryanoasis/vim-devicons'
-
-	elseif OSTYPE == "Linux\n"
-		" Linux 向けの設定
-	endif
-
 call plug#end()
 
 

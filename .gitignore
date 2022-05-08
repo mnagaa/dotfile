@@ -2,6 +2,6 @@
 .fzf/
 .zsh/
 .vim/**
-
+.DS_Store
 
 !.gitkeep
