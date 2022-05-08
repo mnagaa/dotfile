@@ -1,13 +1,16 @@
 # dotfile
 
-## Mac OS
-
 ```shell
+## Mac OS
 $ ./ctl_mac.sh
-```
 
 ## Linux
-
-```shell
 $ ./ctl_linux.sh
+```
+
+## p10k
+
+- 変更する時
+```shell
+> p10k configure
 ```
