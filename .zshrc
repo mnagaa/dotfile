@@ -124,6 +124,7 @@ setopt PROMPT_SUBST ; PS1='%F{green}%n@%m%f: %F{cyan}%~%f %F{red}$(__git_ps1 "(%
 
 alias ls='ls -G'
 alias ll='ls -alF'
+alias gip='curl ifconfig.io'
 
 alias g='git'
 alias ga='git add'
