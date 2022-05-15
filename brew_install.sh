@@ -8,7 +8,8 @@ brew install \
   wget \
   yarn \
   nodebrew\
-  jq
+  jq \
+  watch
 
 brew install --cask \
   visual-studio-code \
