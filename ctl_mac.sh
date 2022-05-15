@@ -45,3 +45,5 @@ if [ ! -d ~/.nodenv ]; then
 else
 	echo "Install nodeenv is skipped."
 fi
+
+bash ./brew_install.sh

@@ -17,4 +17,3 @@ do
 	ln -s $CURRENT_DIR/$DIR ~/$DIR
 done
 echo "[completed]: link synbolic links"
-
