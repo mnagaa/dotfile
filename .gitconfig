@@ -1,0 +1,12 @@
+[user]
+	email = s.c.x0x0www10@icloud.com
+	name = mnagaa
+
+[color]
+	status = auto
+	ui = true
+
+[color "status"]
+    added = yellow
+	changed = green
+	untracked = cyan
