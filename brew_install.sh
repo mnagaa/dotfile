@@ -8,6 +8,7 @@ brew install \
   wget \
   yarn \
   nodebrew\
+  pyenv \
   jq \
   watch
 
