@@ -11,9 +11,8 @@ brew install \
   jq \
   watch
 
-brew install --cask \
-  visual-studio-code \
-  docker \
-  zoom
+for fname in visual-studio-code docker zoom iterm2; do
+	brew install --cask $fname
+done
 
 echo "*** finish brew_install.sh *** "
