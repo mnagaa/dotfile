@@ -1,11 +1,8 @@
 # dotfile
 
 ```shell
-## Mac OS
-$ ./ctl_mac.sh
-
-## Linux
-$ ./ctl_linux.sh
+$ make mac-setting
+$ make linux-setting
 ```
 
 ## p10k
