@@ -21,7 +21,8 @@ brew install \
   telnet \
   truncate \
   sl \
-  awscli
+  awscli \
+  saml2aws
 
 for fname in visual-studio-code \
               docker \

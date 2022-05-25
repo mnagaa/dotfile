@@ -17,4 +17,3 @@ eval "$(pyenv init --path)"
 # setup nodeenv
 export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init -)"
-
