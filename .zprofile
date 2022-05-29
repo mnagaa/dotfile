@@ -16,4 +16,13 @@ eval "$(pyenv init --path)"
 
 # setup nodeenv
 export PATH="$HOME/.nodenv/bin:$PATH"
-eval "$(nodenv init -)"
+eval "$(nodenv init - --no-rehash)"
+
+# java
+export JAVA_HOME=`/usr/libexec/java_home -v 11`
+export PATH="${JAVA_HOME}/bin:$PATH"
+
+# python setup
+export PYTHONPATH="$PWD:$PYTHONPATH"
+eval "$(pyenv init -)"
+
