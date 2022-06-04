@@ -1,9 +1,17 @@
 #!/bin/zsh
 
 CURRENT_DIR=$PWD
+
+# homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo "[ start ]: installing brew package"
+brew bundle
+echo "[ completed ]: installing brew package"
+
 ZSH_DIR=$CURRENT_DIR/.zsh
 
-if [ ! -d $ZSH_DIR ];then
+if [ ! -d $ZSH_DIR ]; then
 	mkdir $ZSH_DIR
 	cd $ZSH_DIR
 	curl -o git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
@@ -13,21 +21,21 @@ fi
 
 cd $CURRENT_DIR
 
-echo "[start]: setup synbolic links"
+echo "[ start ]: setup synbolic links"
 for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc .p10k.zsh
 do
 	echo "    unlink synbolic links: $DIR"
 	unlink ~/$DIR
 done
-echo "[completed]: unlink synbolic links"
+echo "[ completed ]: unlink synbolic links"
 
-echo "[start]: setup synbolic links"
+echo "[ start ]: setup synbolic links"
 for DIR in .zsh .zshrc .zshenv .zprofile .vim .vimrc .p10k.zsh
 do
 	echo "    set synbolic links: $DIR"
 	ln -s $CURRENT_DIR/$DIR ~/$DIR
 done
-echo "[completed]: link synbolic links"
+echo "[ completed ]: link synbolic links"
 
 
 # vim
@@ -38,7 +46,6 @@ else
 	echo "Install molokai is skipped."
 fi
 
-
 # node
 if [ ! -d ~/.nodenv ]; then
 	git clone git://github.com/nodenv/nodenv.git
@@ -46,4 +53,4 @@ else
 	echo "Install nodeenv is skipped."
 fi
 
-bash ./brew_install.sh
+
