@@ -125,6 +125,8 @@ alias gip='curl ifconfig.io'
 
 alias g='git'
 alias ga='git add'
+alias gr='git rebase'
+alias gri='git rebase -i'
 alias gd='git diff'
 alias diff='colordiff'
 alias gp='git push'
