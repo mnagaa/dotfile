@@ -425,25 +425,24 @@ nmap sv :vsplit<Return><C-w>w
 nmap sq :wq!<Return>
 
 " Move window in normal mode
-nnoremap mh <C-w>h
-nnoremap mk <C-w>k
-nnoremap mj <C-w>j
-nnoremap ml <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-l> <C-w>l
 
 " Switch tab
 nmap th :tabprev<Return>
+nmap <Tab> :tabnext<Return> 
 nmap tl :tabnext<Return>
 " tabnew
 nmap tn :tabnew .<Return>
 nmap te :tabe .<Return>
-nmap <Tab> :tabnext<Return> 
 
 " change `redo` command with shift + u
 nmap <S-u> <C-r>
 
 " delete line with shift + x
 nmap <S-x> <S-v>x
-
 
 " NERDtree space + nでNERDtreeを開くことができる
 " nnoremap <Space>n :NERDTreeToggle<CR>

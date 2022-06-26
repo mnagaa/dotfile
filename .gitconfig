@@ -2,8 +2,11 @@
 [user]
 	name = mnagaa
 	email = s.c.x0x0www10@icloud.com
-
+[color]
+	ui = always
 [color "status"]
-    added = yellow
+	added = yellow
 	changed = green
 	untracked = cyan
+
+
