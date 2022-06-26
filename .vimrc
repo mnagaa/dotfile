@@ -331,6 +331,9 @@ call plug#begin('~/.vim/plugged')
     " 同期しながらsyntax checkできるが
     Plug 'dense-analysis/ale'
 
+    " typescript (tsc)
+    " Plug 'leafgarland/typescript-vim'
+
     " vim for latex
     Plug 'lervag/vimtex'
     let g:tex_flavor='latex'

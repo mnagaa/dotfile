@@ -19,6 +19,10 @@ setup_synbolic_link .zprofile
 setup_synbolic_link .p10k.zsh
 echo "[ completed ]: setup synbolic links for zsh"
 
+echo "[ start ]: setup synbolic links for git"
+setup_synbolic_link .gitconfig
+echo "[ completed ]: setup synbolic links for git"
+
 echo "[ start ]: setup synbolic links for vim"
 setup_synbolic_link .vim
 setup_synbolic_link .vimrc

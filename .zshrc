@@ -98,8 +98,6 @@ setopt auto_pushd
 export LANG=ja_JP.UTF-8
 # 色を使用出来るようにする
 autoload -Uz colors
-colors
-
 
 # git-promptの読み込み
 source ~/.zsh/git-prompt.sh
@@ -110,33 +108,37 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 autoload -Uz compinit && compinit
 
 # プロンプトのオプション表示設定
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUPSTREAM=auto
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUPSTREAM=auto
 
-# プロンプトの表示設定(好きなようにカスタマイズ可)
-setopt PROMPT_SUBST ; PS1='%F{green}%n@%m%f: %F{cyan}%~%f %F{red}$(__git_ps1 "(%s)")%f
-\$ '
+# change ls color
+export CLICOLOR=1
+export LSCOLORS=HeFxCxDxBxegedabagaced
 
 alias ls='ls -G'
 alias ll='ls -alF'
 alias gip='curl ifconfig.io'
 
-alias g='git'
-alias ga='git add'
-alias gr='git rebase'
-alias gri='git rebase -i'
-alias gd='git diff'
-alias diff='colordiff'
-alias gp='git push'
-alias gb='git branch'
-alias gsw='git switch'
-alias gst='git status'
-alias gco='git checkout'
-alias gf='git fetch'
-alias gc='git commit'
-alias greset_soft='git reset --soft HEAD^'
+set_git_alias () {
+	alias g='git'
+	alias ga='git add'
+	alias gr='git rebase'
+	alias gri='git rebase -i'
+	alias gd='git diff'
+	alias diff='colordiff'
+	alias gp='git push'
+	alias gb='git branch'
+	alias gsw='git switch'
+	alias gst='git status'
+	alias gco='git checkout'
+	alias gf='git fetch'
+	alias gc='git commit'
+}
+
+set_git_alias
+
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
