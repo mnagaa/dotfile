@@ -373,9 +373,9 @@ endif
 
 "syntax"
 set cursorline "カーソル下の線
-
 "ハイライトの設定"
 highlight Normal ctermbg=black ctermfg=grey
+" highlight CursorLine term=none cterm=none ctermfg=black ctermbg=gray
 highlight StatusLine term=none cterm=none ctermfg=black ctermbg=cyan
 highlight Comment ctermfg=lightyellow
 
@@ -392,13 +392,6 @@ if &term =~ "xterm"
 	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
-" ===========================
-" custum setting
-" ===========================
-" If more than one window and previous buffer was NERDTree, go back to it.
-autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
-let g:plug_window = 'noautocmd vertical topleft new'
-let NERDTreeShowHidden=1
 
 " keymapping
 map <Up> <Nop>
@@ -443,11 +436,16 @@ nmap tl :tabnext<Return>
 " tabnew
 nmap tn :tabnew .<Return>
 nmap te :tabe .<Return>
+nmap <Tab> :tabnext<Return> 
 
-" change `redo` command
-nnoremap U <C-r>
+" change `redo` command with shift + u
+nmap <S-u> <C-r>
 
-" NERDtree space + n でNERDtreeを開くことができる
+" delete line with shift + x
+nmap <S-x> <S-v>x
+
+
+" NERDtree space + nでNERDtreeを開くことができる
 " nnoremap <Space>n :NERDTreeToggle<CR>
 
 " Esc 2回でハイライトの切替

@@ -64,13 +64,13 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
 # fh - repeat history
-fh() {
+fh () {
   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
-# ===================================
+
 # Setting for Plugin
-# ===================================
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions zsh-completions)
 
 autoload predict-on
@@ -82,25 +82,16 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 # share history when opening multi-prompt
 setopt share_history
-# 重複するコマンドのhistory削除
-setopt hist_ignore_all_dups
-# 日本語ファイル名を表示可能にする
-setopt print_eight_bit
-# cdなしでディレクトリ移動
-setopt auto_cd
-# ビープ音の停止
-setopt no_beep
-# ビープ音の停止(補完時)
-setopt nolistbeep
-# cd -<tab>で以前移動したディレクトリを表示
-setopt auto_pushd
-# 文字コードの指定
-export LANG=ja_JP.UTF-8
-# 色を使用出来るようにする
-autoload -Uz colors
+setopt hist_ignore_all_dups  # 重複するコマンドのhistory削除
+setopt print_eight_bit  # 日本語ファイル名を表示可能にする
+setopt auto_cd  # cdなしでディレクトリ移動
+setopt no_beep  # ビープ音の停止
+setopt nolistbeep  # ビープ音の停止(補完時)
+setopt auto_pushd  # cd -<tab>で以前移動したディレクトリを表示
+export LANG=ja_JP.UTF-8  # 文字コードの指定
+autoload -Uz colors  # 色を使用出来るようにする
 
-# git-promptの読み込み
-source ~/.zsh/git-prompt.sh
+source ~/.zsh/git-prompt.sh  # git-promptの読み込み
 
 # git-completionの読み込み
 fpath=(~/.zsh $fpath)
@@ -117,9 +108,11 @@ export GIT_PS1_SHOWUPSTREAM=auto
 export CLICOLOR=1
 export LSCOLORS=HeFxCxDxBxegedabagaced
 
-alias ls='ls -G'
-alias ll='ls -alF'
-alias gip='curl ifconfig.io'
+set_base_alias () {
+  alias ls='ls -G'
+  alias ll='ls -alF'
+  alias gip='curl ifconfig.io'
+}
 
 set_git_alias () {
 	alias g='git'
@@ -137,6 +130,7 @@ set_git_alias () {
 	alias gc='git commit'
 }
 
+set_base_alias
 set_git_alias
 
 if command -v pyenv 1>/dev/null 2>&1; then
