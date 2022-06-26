@@ -3,5 +3,7 @@
 .zsh/
 .vim/**
 .DS_Store
+.vscode/
 
 !.gitkeep
+molocai/
