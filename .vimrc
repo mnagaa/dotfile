@@ -191,14 +191,10 @@ call plug#begin('~/.vim/plugged')
 
 	Plug 'tpope/vim-commentary'  " vim comment out: gcc
 
-	" markdown preview for vim
-	" usage:
-	"   MarkdownPreview
-	"     Open preview window in markdown buffer
-	"   MarkdownPreviewStop
-	"     Close the preview window and server
 	Plug 'iamcco/mathjax-support-for-mkdp'
-	Plug 'iamcco/markdown-preview.vim'
+	" Markdown with :PreviewMarkdown
+	Plug 'skanehira/preview-markdown.vim'
+
 	" LSP
 	" https://tech.fusic.co.jp/posts/2020-07-01-vim-lsp-settings/
 	Plug 'prabirshrestha/vim-lsp'
