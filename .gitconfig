@@ -1,10 +1,7 @@
+# This is Git's per-user configuration file.
 [user]
-	email = s.c.x0x0www10@icloud.com
 	name = mnagaa
-
-[color]
-	status = auto
-	ui = true
+	email = s.c.x0x0www10@icloud.com
 
 [color "status"]
     added = yellow
