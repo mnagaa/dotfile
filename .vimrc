@@ -217,6 +217,7 @@ call plug#begin('~/.vim/plugged')
 	" Plug 'fatih/vim-go', { 'tag': '*' }
 	" Plugin options
 	" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
 	" Plugin outside ~/.vim/plugged with post-update hook
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
@@ -400,8 +401,8 @@ inoremap <Right> <Nop>
 set splitbelow
 set splitright
 " Split window
-nmap ss :split<Return><C-w>w
-nmap sv :vsplit<Return><C-w>w
+nmap ss :split .<Return><C-w>w
+nmap sv :vsplit .<Return><C-w>w
 
 " close window
 nmap sq :wq!<Return>
