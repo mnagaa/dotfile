@@ -24,7 +24,6 @@ source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 
 " BASE SETTING
 set backspace=start,eol,indent "backspaceの設定"
-set title
 set whichwrap=b,s,[,],,~ "カーソルキーの設定"
 set wildmenu wildmode=list:full"補完の設定"
 
@@ -39,7 +38,7 @@ set spelllang=en,cjk
 filetype plugin indent on
 
 set re=0
-set nolist wrap colorcolumn=80
+set nolist nowrap colorcolumn=120
 set linebreak
 set nrformats-=octal
 
@@ -48,14 +47,10 @@ let &t_SI .= "\e[5 q"
 let &t_EI .= "\e[1 q"
 
 set hidden history=50 virtualedit=block
-set whichwrap=b,s,[,],<,>
-set number showcmd ruler
 
 "ステータスラインの表示"
 set laststatus=2
 set statusline=%F%r%h%=
-
-set background=dark
 set tabstop=2 softtabstop=2 autoindent smartindent expandtab shiftwidth=2
 
 set wildmenu
@@ -72,10 +67,6 @@ set hlsearch   " 検索文字をハイライト
 " <C-n>の時に自分のファイルだけを検索する
 setlocal complete=.,w,b,u,t
 set complete-=i
-
-" ウィンドウ関連
-set splitbelow
-set splitright
 
 " ファイル関連
 "set nobackup   " バックアップ取らない
@@ -116,7 +107,6 @@ set vb t_vb=
 set noerrorbells
 set novisualbell
 
-
 " Display Settings
 " ColorScheme
 if has('syntax') && !exists('g:syntax_on')
@@ -141,6 +131,7 @@ set matchtime=1       " 括弧の対を見つけるミリ秒数
 set showcmd           " 入力中のコマンドを表示
 set number            " 行番号表示
 set relativenumber
+set ruler
 set wrap              " 画面幅で折り返す
 "set list              " 不可視文字表示
 "set listchars=tab:>  " 不可視文字の表示方法
@@ -248,35 +239,39 @@ call plug#begin('~/.vim/plugged')
 				\  'options': '-m -x +s',
 				\  'down':    '40%'})
 	nnoremap <Leader>r :FZFMru<CR>
-	
+
 	" Unmanaged plugin (manually installed and updated)
 	Plug '~/my-prototype-plugin'
-	
+
 	Plug 'gorodinskiy/vim-coloresque'
 	Plug 'djoshea/vim-autoread'
 	Plug 'ParamagicDev/vim-medic_chalk'
 	Plug 'atahabaki/archman-vim'
-	
+
 	" 同期しながらsyntax checkできるが
 	Plug 'dense-analysis/ale'
-	
-	" typescript (tsc)
-	" Plug 'leafgarland/typescript-vim'
-	
+	" dense-analysis/ale
+	let g:ale_set_highlights = 0
+	let g:ale_linters = {'python': ['flake8']}
+	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+	let g:ale_fixers = {
+				\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+				\   'python': ['black'],
+				\ }
+	let g:ale_fix_on_save = 1
+
+	Plug 'ntpeters/vim-better-whitespace'
+
 	" vim for latex
 	Plug 'lervag/vimtex'
 	let g:tex_flavor='latex'
-	
+
 	" molokai
 	Plug 'tomasr/molokai'
 	Plug 'bronson/vim-trailing-whitespace'
 
 	" カラースキームを調べる
 	Plug 'guns/xterm-color-table.vim'
-	" 構文エラーチェック
-	Plug 'scrooloose/syntastic'
-	" "プロジェクトに入っているESLintを読み込む
-	Plug 'pmsorhaindo/syntastic-local-eslint.vim'
 
 	" Python
 	Plug 'nathanaelkane/vim-indent-guides'
@@ -287,35 +282,23 @@ call plug#begin('~/.vim/plugged')
 	Plug 'prettier/vim-prettier', {
 				\ 'do': 'yarn install',
 				\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact'] }
+
+  " git差分を左側に表示する
+	Plug 'airblade/vim-gitgutter'
+
+	Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " vim-prettier
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 
-" Syntastic
-" Javascript用. 構文エラーチェックにESLintを使用
-let g:syntastic_javascript_checkers=['eslint']
 
 " Python用. 構文エラーチェックにpep8とpyflakesを使用
 " 保存時に自動でチェック
 let g:PyFlakeOnWrite=1
 let g:PyFlakeCheckers='pep8,mccabe,pyflakes'
 let g:PyFlakeDefaultComplexity=10
-
-let g:syntastic_python_checkers=['pylint', 'pep8']
-
-let g:syntastic_html_checkers=['tidy']
-let g:syntastic_css_checkers=['csslint']
-
-let g:syntastic_tex_checkers=['lacheck']
-
-let g:syntastic_typescript_tsc_fname = ''
-
-" Javascript, python以外は構文エラーチェックをしない
-let g:syntastic_mode_map = { 'mode': 'passive',
-			\ 'active_filetypes': ['javascript', 'html', 'css', 'python', 'typescript'],
-			\ 'passive_filetypes': [] }
 
 " カラースキーム編集用
 " ハイライトグループを知るコマンド:SyntaxInfoを実装
@@ -417,6 +400,9 @@ inoremap <Right> <Nop>
 " :h map-modes
 "
 
+" ウィンドウ関連
+set splitbelow
+set splitright
 " Split window
 nmap ss :split<Return><C-w>w
 nmap sv :vsplit<Return><C-w>w
@@ -432,7 +418,7 @@ nnoremap <C-l> <C-w>l
 
 " Switch tab
 nmap th :tabprev<Return>
-nmap <Tab> :tabnext<Return> 
+nmap <Tab> :tabnext<Return>
 nmap tl :tabnext<Return>
 " tabnew
 nmap tn :tabnew .<Return>
