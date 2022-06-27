@@ -113,6 +113,7 @@ set_base_alias () {
   alias ll='ls -alF'
   alias gip='curl ifconfig.io'
   alias relogin='exec $SHELL -l'
+  alias watch='watch -c'
 }
 
 set_git_alias () {
@@ -129,7 +130,7 @@ set_git_alias () {
 	alias gco='git checkout'
 	alias gf='git fetch'
 	alias gc='git commit'
-  alias ggra='git log --graph --oneline'
+  alias ggraph='git log --graph --oneline'
 }
 
 set_base_alias
