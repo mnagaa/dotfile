@@ -26,3 +26,6 @@ export PATH="${JAVA_HOME}/bin:$PATH"
 export PYTHONPATH="$PWD:$PYTHONPATH"
 eval "$(pyenv init -)"
 
+
+# added by Snowflake SnowSQL installer v1.2
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
