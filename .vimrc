@@ -284,6 +284,21 @@ call plug#begin('~/.vim/plugged')
 	Plug 'airblade/vim-gitgutter'
 
 	Plug 'sheerun/vim-polyglot'
+
+	" terraform
+	Plug 'prabirshrestha/async.vim'
+	Plug 'prabirshrestha/vim-lsp'
+	Plug 'prabirshrestha/asyncomplete.vim'
+	Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+	Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
+	if executable('terraform-lsp')
+		au User lsp_setup call lsp#register_server({
+					\ 'name': 'terraform-lsp',
+					\ 'cmd': {server_info->['terraform-lsp']},
+					\ 'whitelist': ['terraform','tf'],
+					\ })
+	endif
 call plug#end()
 
 " vim-prettier
