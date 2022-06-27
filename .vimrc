@@ -56,6 +56,8 @@ set tabstop=2 softtabstop=2 autoindent smartindent expandtab shiftwidth=2
 set wildmenu
 set wildmode=longest,list,full
 
+set autochdir
+
 " 検索関連
 set wrapscan   " 最後まで検索したら先頭へ戻る
 "set nowrapscan " 最後まで検索しても先頭に戻らない
