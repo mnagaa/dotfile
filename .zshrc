@@ -112,6 +112,7 @@ set_base_alias () {
   alias ls='ls -G'
   alias ll='ls -alF'
   alias gip='curl ifconfig.io'
+  alias relogin='exec $SHELL -l'
 }
 
 set_git_alias () {
