@@ -114,6 +114,9 @@ set_base_alias () {
   alias gip='curl ifconfig.io'
   alias relogin='exec $SHELL -l'
   alias watch='watch -c'
+
+  # snowflake
+  alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 }
 
 set_git_alias () {
