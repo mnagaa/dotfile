@@ -16,14 +16,13 @@ fi
 # でコンパイルしておくと読み込むときに時間がかからなくなるので
 # scriptが長くなったときに実行する
 # ==========================================
-# zplugが無ければインストール
 
+# zplugが無ければインストール
+# $ zplug install
 if [[ ! -d $HOME/.zplug ]];then
   git clone https://github.com/zplug/zplug $HOME/dotfile/.zplug
   ln -s ~/dotfile/.zplug ~/.zplug
 fi
-# $ zplug install
-# zplug
 source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
