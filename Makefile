@@ -1,6 +1,3 @@
-
-
-
 mac-setting:
 	bash ctl_mac.sh
 
