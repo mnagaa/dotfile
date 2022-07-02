@@ -17,6 +17,9 @@ set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先�
 set ambiwidth=double " □や○文字が崩れる問題を解決
 scriptencoding utf-8
 
+set eol
+set nofixendofline
+
 " カッコ・タグの対応
 set matchtime=1       " 括弧の対を見つけるミリ秒数
 set matchpairs& matchpairs+=<:>,(:),{:},[:],  " マッチさせるかっこの設定
