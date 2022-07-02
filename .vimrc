@@ -20,6 +20,8 @@ scriptencoding utf-8
 set eol
 set nofixendofline
 
+set conceallevel=0
+
 " カッコ・タグの対応
 set matchtime=1       " 括弧の対を見つけるミリ秒数
 set matchpairs& matchpairs+=<:>,(:),{:},[:],  " マッチさせるかっこの設定

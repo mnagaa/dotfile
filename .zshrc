@@ -124,7 +124,6 @@ set_git_alias () {
 	alias gr='git rebase'
 	alias gri='git rebase -i'
 	alias gd='git diff'
-	alias diff='colordiff'
 	alias gp='git push'
 	alias gb='git branch'
 	alias gsw='git switch'
@@ -133,6 +132,8 @@ set_git_alias () {
 	alias gf='git fetch'
 	alias gc='git commit'
   alias ggraph='git log --graph --oneline'
+  alias wgraph='watch git log --graph --oneline'
+  alias wgst='watch git status'
 }
 
 set_base_alias
