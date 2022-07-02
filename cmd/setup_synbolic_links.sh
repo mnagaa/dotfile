@@ -26,6 +26,7 @@ echo "[ completed ]: setup synbolic links for git"
 echo "[ start ]: setup synbolic links for vim"
 setup_synbolic_link .vim
 setup_synbolic_link .vimrc
+ln -s "$HOME/.vimrc" "$HOME/.ideavimrc"
 echo "[ completed ]: setup synbolic links for vim"
 
 echo "[ start ]: setup synbolic links for iterm2"
