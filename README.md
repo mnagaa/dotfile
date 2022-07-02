@@ -10,7 +10,7 @@ $ make linux-setting
 - 変更する時
 ```shell
 > p10k configure
-```'
+```
 
 ## Vim Setup
 
