@@ -139,6 +139,14 @@ set_git_alias () {
 set_base_alias
 set_git_alias
 
+# gbr - checkout git branch
+gbr() {
+  local branches branch
+  branches=$(git --no-pager branch -vv --no-color) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
