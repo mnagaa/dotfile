@@ -464,7 +464,6 @@ highlight Normal ctermbg=black ctermfg=grey
 highlight StatusLine term=none cterm=none ctermfg=black ctermbg=cyan
 highlight Comment ctermfg=lightyellow
 
-
 " Plugin Settings
 if &term =~ "xterm"
 	let &t_SI .= "\e[?2004h"
@@ -560,8 +559,6 @@ noremap <S-l> $
 " Yでキャレット行末までヤンクする
 nnoremap Y y$
 
-" 開いているファイルのdiffを確認
-nnoremap <C-d> :!git difftool %:p<CR>
 
 " 'gcc'で一括コメントアウト
 autocmd FileType apache setlocal commentstring=#\ %s
