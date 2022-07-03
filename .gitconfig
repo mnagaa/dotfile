@@ -14,3 +14,7 @@
 	defaultBranch = main
 [fetch]
 	prune = true
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
