@@ -521,6 +521,17 @@ nnoremap <Leader>k <C-w>k
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>l <C-w>l
 
+" Netrw
+nnoremap <Leader>E :Explore<CR>
+nnoremap <Leader>S :Sexplore<CR>
+nnoremap <Leader>V :Vexplore<CR>
+
+" BufExplorer
+let g:bufExplorerShowDirectories=0
+let g:bufExplorerShowUnlisted=0
+let g:bufExplorerSortBy='fullpath'
+nnoremap <Leader>l :BufExplorerHorizontalSplit<CR>
+
 " Switch tab
 nmap th :tabprev<Return>
 nmap <Tab> :tabnext<Return>
