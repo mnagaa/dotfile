@@ -121,6 +121,7 @@ set_base_alias () {
 set_git_alias () {
 	alias g='git'
 	alias ga='git add'
+  alias grs='git restore --staged $(echo $(git diff --name-only --cached) | awk -v ORS=" " 1)' # unstaged all files
 	alias gr='git rebase'
 	alias gri='git rebase -i'
 	alias gd='git diff'
