@@ -551,6 +551,9 @@ noremap <S-l> $
 " Yでキャレット行末までヤンクする
 nnoremap Y y$
 
+" 開いているファイルのdiffを確認
+nnoremap <C-d> :!git difftool %:p<CR>
+
 " 'gcc'で一括コメントアウト
 autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType vim setlocal foldmethod=marker
