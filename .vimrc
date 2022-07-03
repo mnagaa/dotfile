@@ -321,6 +321,15 @@ call plug#begin('~/.vim/plugged')
 	" let g:airline#extensions#tabline#show_close_button = 0
 
 	Plug 'bronson/vim-trailing-whitespace'
+
+
+	" BufExplorer
+	" * <CR> ... 選択されたバッファをアクティブに
+	" * f ... 選択されたバッファを水平分割
+	" * v ... 選択されたバッファを垂直分割
+	" * t ... 選択されたバッファを別タブページに
+	" * d ... 選択されたバッファを削除
+	" * q ... BufExplorerを終了
 	Plug 'jlanzarotta/bufexplorer'
 
 	" file tree
