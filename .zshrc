@@ -123,7 +123,7 @@ set_git_alias () {
 	alias ga='git add'
 	alias gr='git rebase'
 	alias gri='git rebase -i'
-	alias gd='git difftool'
+	alias gd='git diff'
 	alias gp='git push'
 	alias gb='git branch'
 	alias gsw='git switch'
