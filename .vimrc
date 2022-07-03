@@ -321,6 +321,7 @@ call plug#begin('~/.vim/plugged')
 	" let g:airline#extensions#tabline#show_close_button = 0
 
 	Plug 'bronson/vim-trailing-whitespace'
+	Plug 'jlanzarotta/bufexplorer'
 
 	" file tree
 	Plug 'lambdalisue/fern.vim'
