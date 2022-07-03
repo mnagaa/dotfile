@@ -177,6 +177,8 @@ endfunction
 
 let mapleader = "\<Space>"
 
+
+
 if has('vim_starting')
 	" setting for vim-plug
 	let s:plugin_manager_dir='~/.vim/plugged/vim-plug'
@@ -449,13 +451,11 @@ set t_Co=256
 " colorscheme molokai
 colorscheme codedark
 " colorscheme panic
+
+" syntax
 syntax enable " 構文に色を付ける
+syntax on
 
-if has("syntax")
-	syntax on
-endif
-
-"syntax"
 set cursorline "カーソル下の線
 "ハイライトの設定"
 highlight Normal ctermbg=black ctermfg=grey
@@ -499,11 +499,14 @@ inoremap <Right> <Nop>
 "
 " マップコマンドの対応の情報
 " :h map-modes
-"
+
+" save
+" Ctrl-s で保存
+nnoremap <C-s> :w<CR>
 
 " ウィンドウ関連
-set splitbelow
-set splitright
+set splitbelow splitright
+
 " Split window
 nmap ss :split .<Return><C-w>w
 nmap sv :vsplit .<Return><C-w>w
@@ -512,10 +515,10 @@ nmap sv :vsplit .<Return><C-w>w
 nmap sq :wq!<Return>
 
 " Move window in normal mode
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
-nnoremap <C-l> <C-w>l
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>l <C-w>l
 
 " Switch tab
 nmap th :tabprev<Return>
