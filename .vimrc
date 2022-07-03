@@ -17,10 +17,9 @@ set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先�
 set ambiwidth=double " □や○文字が崩れる問題を解決
 scriptencoding utf-8
 
+" 最終行を追加する設定
 set eol
 set nofixendofline
-
-set conceallevel=0
 
 " カッコ・タグの対応
 set matchtime=1       " 括弧の対を見つけるミリ秒数
@@ -176,6 +175,8 @@ endfunction
 "    Plugins
 " ============================
 
+let mapleader = "\<Space>"
+
 if has('vim_starting')
 	" setting for vim-plug
 	let s:plugin_manager_dir='~/.vim/plugged/vim-plug'
@@ -188,15 +189,13 @@ if has('vim_starting')
 endif
 
 " Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 " === :PlugInstall ===
+
 call plug#begin('~/.vim/plugged')
 
-	Plug 'junegunn/vim-plug',
-				\ {'dir': '~/.vim/plugged/vim-plug/autoload'}
-
-	Plug 'tpope/vim-commentary'  " vim comment out: gcc
+	Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
+	Plug 'tpope/vim-commentary'  " vim comment out by gcc
 
 	Plug 'iamcco/mathjax-support-for-mkdp'
 	" Markdown with :PreviewMarkdown
@@ -228,7 +227,6 @@ call plug#begin('~/.vim/plugged')
 	" Plugin outside ~/.vim/plugged with post-update hook
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
-	let mapleader = "\<Space>"
 	"" fzf.vim
 	" Ctrl+pでファイル検索を開く
 	" git管理されていれば:GFiles、そうでなければ:Filesを実行する
@@ -269,9 +267,6 @@ call plug#begin('~/.vim/plugged')
 	" fcでコミット履歴検索を開く
 	nnoremap fc :Commits<CR>
 
-	" Unmanaged plugin (manually installed and updated)
-	Plug '~/my-prototype-plugin'
-
 	Plug 'gorodinskiy/vim-coloresque'
 	Plug 'djoshea/vim-autoread'
 	Plug 'ParamagicDev/vim-medic_chalk'
@@ -283,8 +278,7 @@ call plug#begin('~/.vim/plugged')
 	let g:ale_set_highlights = 0
 	let g:ale_linters = {'python': ['flake8']}
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-	let g:ale_fixers = {
-				\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
 				\   'python': ['black'],
 				\ }
 	let g:ale_fix_on_save = 1
