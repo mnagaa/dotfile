@@ -228,7 +228,6 @@ call plug#begin('~/.vim/plugged')
 	" Plugin outside ~/.vim/plugged with post-update hook
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
-	" like Spacemacs
 	let mapleader = "\<Space>"
 	"" fzf.vim
 	" Ctrl+pでファイル検索を開く
@@ -244,15 +243,11 @@ call plug#begin('~/.vim/plugged')
 	nnoremap <C-p> :call FzfOmniFiles()<CR>
 
 	" Ctrl+gで文字列検索を開く
-	" <S-?>でプレビューを表示/非表示する
+	" fernなどでファイルを開いた時にも.gitから検索してくれる
 	command! -bang -nargs=* Rg
-				\ call fzf#vim#grep(
-				\ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
-				\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 3..'}, 'up:60%')
-				\ : fzf#vim#with_preview({'options': '--exact --delimiter : --nth 3..'}, 'right:50%:hidden', '?'),
-				\ <bang>0)
-	nnoremap <C-g> :Rg<CR>
+				\ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
 
+	nnoremap <C-g> :Rg<CR>
 	" frでカーソル位置の単語をファイル検索する
 	nnoremap fr vawy:Rg <C-R>"<CR>
 	" frで選択した単語をファイル検索する
