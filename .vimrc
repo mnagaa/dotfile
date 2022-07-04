@@ -332,10 +332,12 @@ call plug#begin('~/.vim/plugged')
 	" * q ... BufExplorerを終了
 	Plug 'jlanzarotta/bufexplorer'
 
-	" file tree
+	""" Fean: file tree
+	" Ctrl+nで" Show hidden files
 	Plug 'lambdalisue/fern.vim'
-	" Ctrl+nでファイルツリーを表示/非表示する
+	let g:fern#default_hidden=1 " ファイルツリーを表示/非表示する
 	nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
+
 	" file treeにgitの差分を表示する
 	Plug 'lambdalisue/fern-git-status.vim'
 	" fontの追加
@@ -535,10 +537,21 @@ nnoremap <Leader>S :Sexplore<CR>
 nnoremap <Leader>V :Vexplore<CR>
 
 " BufExplorer
+" Leader bでバッファ表示
 let g:bufExplorerShowDirectories=0
 let g:bufExplorerShowUnlisted=0
 let g:bufExplorerSortBy='fullpath'
-nnoremap <Leader>l :BufExplorerHorizontalSplit<CR>
+nnoremap <Leader>b :BufExplorerHorizontalSplit<CR>
+
+" jump
+" * Ctrl-] ... トピックへジャンプ
+" * Ctrl-o ... ジャンプ元に戻る
+
+" info
+" * K ... カーソル上の単語のマニュアルを開く
+" * :so $<CR> ... 現在のファイルを再ロード
+
+nnoremap <Leader>ev :tabe ~/dotfile/.vimrc<CR>
 
 " Switch tab
 nmap th :tabprev<Return>
