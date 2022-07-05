@@ -525,11 +525,17 @@ nmap sv :vsplit .<Return><C-w>w
 " close window
 nmap sq :wq!<Return>
 
-" Move window in normal mode
-nnoremap <Leader>h <C-w>h
-nnoremap <Leader>k <C-w>k
-nnoremap <Leader>j <C-w>j
-nnoremap <Leader>l <C-w>l
+" terminal
+nnoremap <Leader>v :vertical terminal<CR>
+
+" nnoremap <Leader>h <C-w>h
+" nnoremap <Leader>k <C-w>k
+" nnoremap <Leader>j <C-w>j
+" nnoremap <Leader>l <C-w>l
+nnoremap <C-w><C-h> <C-w>h
+nnoremap <C-w><C-k> <C-w>k
+nnoremap <C-w><C-j> <C-w>j
+nnoremap <C-w><C-l> <C-w>l
 
 " Netrw
 nnoremap <Leader>E :Explore<CR>
