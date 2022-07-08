@@ -136,9 +136,8 @@ set display=lastline  " 長い行も一行で収まるように
 set showmatch         " 括弧の対応をハイライト
 set showcmd           " 入力中のコマンドを表示
 set number            " 行番号表示
-set relativenumber
+" set relativenumber
 set ruler
-set wrap              " 画面幅で折り返す
 "set list              " 不可視文字表示
 "set listchars=tab:>  " 不可視文字の表示方法
 set title           " タイトル書き換えない
@@ -276,13 +275,20 @@ call plug#begin('~/.vim/plugged')
 
 	" 同期しながらsyntax checkできるが
 	Plug 'dense-analysis/ale'
+
+	" Python
+	Plug 'psf/black', { 'branch': 'stable' }
+	augroup black_on_save
+		autocmd!
+		autocmd BufWritePre *.py Black
+	augroup end
+
 	" dense-analysis/ale
 	let g:ale_set_highlights = 0
 	let g:ale_linters = {'python': ['flake8']}
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
-				\   'python': ['black'],
-				\ }
+	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+	let g:ale_fixers.python = ['black']
 	let g:ale_fix_on_save = 1
 
 	Plug 'ntpeters/vim-better-whitespace'
@@ -519,8 +525,8 @@ nnoremap <C-s> :w<CR>
 set splitbelow splitright
 
 " Split window
-nmap ss :split .<Return><C-w>w
-nmap sv :vsplit .<Return><C-w>w
+nmap ss :split .<CR>
+nmap sv :vsplit .<CR>
 
 " close window
 nmap sq :wq!<Return>
@@ -528,17 +534,21 @@ nmap sq :wq!<Return>
 " terminal
 nnoremap <Leader>v :vertical terminal<CR>
 
-" nnoremap <Leader>h <C-w>h
-" nnoremap <Leader>k <C-w>k
-" nnoremap <Leader>j <C-w>j
-" nnoremap <Leader>l <C-w>l
+" move windows
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>l <C-w>l
 nnoremap <C-w><C-h> <C-w>h
 nnoremap <C-w><C-k> <C-w>k
 nnoremap <C-w><C-j> <C-w>j
 nnoremap <C-w><C-l> <C-w>l
 
+nnoremap <Leader><Left> <C-w>h
+nnoremap <Leader><Right> <C-w>l
+
 " Netrw
-nnoremap <Leader>E :Explore<CR>
+nnoremap <Leader>e :Explore<CR>
 nnoremap <Leader>S :Sexplore<CR>
 nnoremap <Leader>V :Vexplore<CR>
 
@@ -557,6 +567,7 @@ nnoremap <Leader>b :BufExplorerHorizontalSplit<CR>
 " * K ... カーソル上の単語のマニュアルを開く
 " * :so $<CR> ... 現在のファイルを再ロード
 
+" vimrcを開く
 nnoremap <Leader>ev :tabe ~/dotfile/.vimrc<CR>
 
 " Switch tab
@@ -586,7 +597,6 @@ noremap <S-l> $
 
 " Yでキャレット行末までヤンクする
 nnoremap Y y$
-
 
 " 'gcc'で一括コメントアウト
 autocmd FileType apache setlocal commentstring=#\ %s
