@@ -1,6 +1,4 @@
-"==============================================================
-"          Initial Configuration
-"==============================================================
+" Author: mnagaa
 
 if has('unix')
 	let $LANG = 'C'
@@ -37,8 +35,7 @@ set whichwrap=b,s,[,],,~ "カーソルキーの設定"
 set wildmenu wildmode=list:full"補完の設定"
 
 " spellcheck
-set spelllang=en,cjk
-set nospell
+set spelllang=en,cjk nospell
 
 " 表示関係
 filetype plugin indent on
@@ -51,14 +48,9 @@ set nrformats-=octal
 set hidden history=50 virtualedit=block
 
 "ステータスラインの表示"
-set laststatus=2
-set statusline=%F
+set laststatus=2 statusline=%F
 set tabstop=2 softtabstop=2 autoindent smartindent expandtab shiftwidth=2
-
-set wildmenu
-set wildmode=longest,list,full
-
-" set autochdir
+set wildmenu wildmode=longest,list,full
 
 " 検索関連
 set wrapscan   " 最後まで検索したら先頭へ戻る
@@ -111,11 +103,6 @@ set vb t_vb=
 set noerrorbells
 set novisualbell
 
-" Display Settings
-" ColorScheme
-syntax enable " シンタックスカラーリングオン
-set t_Co=256
-set background=dark
 
 " true color support
 let colorterm=$COLORTERM
@@ -145,11 +132,6 @@ set foldlevel=1
 set foldlevelstart=99
 set foldcolumn=0
 
-
-" ============================
-"    Plugins
-" ============================
-
 let mapleader = "\<Space>"
 
 if has('vim_starting')
@@ -163,224 +145,190 @@ if has('vim_starting')
 	end
 endif
 
+" ============================
+"    Plugins
+" ----------------------------
 " Specify a directory for plugins
-" - Avoid using standard Vim directory names like 'plugin'
-" === :PlugInstall ===
-
+" usage:
+"			:PlugInstall
+"
+" ============================
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
+Plug 'tpope/vim-commentary'  " vim comment out by gcc
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'skanehira/preview-markdown.vim'
+" LSP: https://tech.fusic.co.jp/posts/2020-07-01-vim-lsp-settings/
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
-	Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
-	Plug 'tpope/vim-commentary'  " vim comment out by gcc
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
 
-	Plug 'iamcco/mathjax-support-for-mkdp'
-	" Markdown with :PreviewMarkdown
-	Plug 'skanehira/preview-markdown.vim'
+" Any valid git URL is allowed
+Plug 'junegunn/vim-github-dashboard'
 
-	" LSP
-	" https://tech.fusic.co.jp/posts/2020-07-01-vim-lsp-settings/
-	Plug 'prabirshrestha/vim-lsp'
-	Plug 'mattn/vim-lsp-settings'
+" On-demand loading
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"" Using a non-default branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-	" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-	Plug 'junegunn/vim-easy-align'
+" fzf.vim: Ctrl+pでファイル検索を開く
+" git管理されていれば:GFiles、そうでなければ:Filesを実行する
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'djoshea/vim-autoread'
+Plug 'ParamagicDev/vim-medic_chalk'
+Plug 'atahabaki/archman-vim'
+Plug 'psf/black', { 'branch': 'stable' }
 
-	" Any valid git URL is allowed
-	Plug 'junegunn/vim-github-dashboard'
+Plug 'dense-analysis/ale'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'bronson/vim-trailing-whitespace'
 
-	" Multiple Plug commands can be written in a single line using | separators
-	" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'lervag/vimtex' " vim for latex
 
-	" On-demand loading
-	Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-	"" Using a non-default branch
-	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-	" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-	" Plug 'fatih/vim-go', { 'tag': '*' }
-	" Plugin options
-	" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+" colorscheme
+Plug 'tomasiser/vim-code-dark'
+Plug 'jlanzarotta/bufexplorer'
 
-	" Plugin outside ~/.vim/plugged with post-update hook
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug 'junegunn/fzf.vim'
-	"" fzf.vim
-	" Ctrl+pでファイル検索を開く
-	" git管理されていれば:GFiles、そうでなければ:Filesを実行する
-	fun! FzfOmniFiles()
-		let is_git = system('git status')
-		if v:shell_error
-			:Files
-		else
-			:GFiles
-		endif
-	endfun
-	nnoremap <C-p> :call FzfOmniFiles()<CR>
+" Fern: file tree
+" Ctrl+nで" Show hidden files
+Plug 'lambdalisue/fern.vim'
 
-	" Ctrl+gで文字列検索を開く
-	" fernなどでファイルを開いた時にも.gitから検索してくれる
-	command! -bang -nargs=* Rg
-				\ call fzf#vim#grep(
-				\	"rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1,
-				\ {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0
-				\ )
+" file treeにgitの差分を表示する
+Plug 'lambdalisue/fern-git-status.vim'
+" fontの追加
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+" file treeのiconに色を付ける
+Plug 'lambdalisue/glyph-palette.vim'
 
-	nnoremap <C-g> :Rg<CR>
-	" frでカーソル位置の単語をファイル検索する
-	nnoremap fr vawy:Rg <C-R>"<CR>
-	" frで選択した単語をファイル検索する
-	xnoremap fr y:Rg <C-R>"<CR>
+" カラースキームを調べる
+Plug 'guns/xterm-color-table.vim'
 
-	" fbでバッファ検索を開く
-	nnoremap fb :Buffers<CR>
-	" fpでバッファの中で1つ前に開いたファイルを開く
-	nnoremap fp :Buffers<CR><CR>
-	" flで開いているファイルの文字列検索を開く
-	nnoremap fl :BLines<CR>
-	" fmでマーク検索を開く
-	nnoremap fm :Marks<CR>
-	" fhでファイル閲覧履歴検索を開く
-	nnoremap fh :History<CR>
-	" fcでコミット履歴検索を開く
-	nnoremap fc :Commits<CR>
+" Python
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nvie/vim-flake8'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'Townk/vim-autoclose'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
-	Plug 'gorodinskiy/vim-coloresque'
-	Plug 'djoshea/vim-autoread'
-	Plug 'ParamagicDev/vim-medic_chalk'
-	Plug 'atahabaki/archman-vim'
-	Plug 'psf/black', { 'branch': 'stable' }
-	" 同期しながらsyntax checkできるが
-	Plug 'dense-analysis/ale'
+" git差分を左側に表示する
+Plug 'airblade/vim-gitgutter'
+Plug 'sheerun/vim-polyglot'
 
-	" dense-analysis/ale
-	let g:ale_set_highlights = 0
-	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-	let g:ale_fix_on_save = 1
-	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-	let g:ale_fixers.python = ['black']
-	let g:ale_linters = {}
-	let g:ale_linters.python = ['black']
-
-	Plug 'ntpeters/vim-better-whitespace'
-
-	" vim for latex
-	Plug 'lervag/vimtex'
-	let g:tex_flavor='latex'
-
-	" molokai
-	" Plug 'tomasr/molokai'
-	Plug 'tomasiser/vim-code-dark'
-	let g:airline_theme = 'codedark'
-
-	" vim-airline
-	" setting for statusbar
-	" Plug 'vim-airline/vim-airline'
-	" Plug 'vim-airline/vim-airline-themes'
-	" let g:airline#extensions#tabline#enabled = 1
-	" ステータスラインに表示する項目を変更する
-	" let g:airline#extensions#default#layout = [
-	" 			\ [ 'a', 'b', 'c' ],
-	" 			\ ['z']
-	" 			\ ]
-	" let g:airline_section_c = '%t %M'
-	" let g:airline_section_z = get(g:, 'airline_linecolumn_prefix', '').'%3l:%-2v'
-	" 変更がなければdiffの行数を表示しない
-	" let g:airline#extensions#hunks#non_zero_only = 1
-
-	" タブラインの表示を変更する
-	" let g:airline#extensions#tabline#fnamemod = ':t'
-	" let g:airline#extensions#tabline#show_buffers = 1
-	" let g:airline#extensions#tabline#show_splits = 0
-	" let g:airline#extensions#tabline#show_tabs = 1
-	" let g:airline#extensions#tabline#show_tab_nr = 0
-	" let g:airline#extensions#tabline#show_tab_type = 1
-	" let g:airline#extensions#tabline#show_close_button = 0
-
-	Plug 'bronson/vim-trailing-whitespace'
-
-
-	" BufExplorer
-	" * <CR> ... 選択されたバッファをアクティブに
-	" * f ... 選択されたバッファを水平分割
-	" * v ... 選択されたバッファを垂直分割
-	" * t ... 選択されたバッファを別タブページに
-	" * d ... 選択されたバッファを削除
-	" * q ... BufExplorerを終了
-	Plug 'jlanzarotta/bufexplorer'
-
-	""" Fean: file tree
-	" Ctrl+nで" Show hidden files
-	Plug 'lambdalisue/fern.vim'
-	let g:fern#default_hidden=1 " ファイルツリーを表示/非表示する
-	nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
-
-	" file treeにgitの差分を表示する
-	Plug 'lambdalisue/fern-git-status.vim'
-	" fontの追加
-	Plug 'lambdalisue/nerdfont.vim'
-	Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-	let g:fern#renderer = 'nerdfont'
-	" file treeのiconに色を付ける
-	" Plug 'lambdalisue/glyph-palette.vim'
-	" " アイコンに色をつける
-	" augroup my-glyph-palette
-	" 	autocmd! *
-	" 	autocmd FileType fern call glyph_palette#apply()
-	" 	autocmd FileType nerdtree,startify call glyph_palette#apply()
-	" augroup END
-
-	" カラースキームを調べる
-	Plug 'guns/xterm-color-table.vim'
-
-	" Python
-	Plug 'nathanaelkane/vim-indent-guides'
-	Plug 'nvie/vim-flake8'
-	Plug 'hynek/vim-python-pep8-indent'
-	Plug 'Townk/vim-autoclose'
-
-	Plug 'prettier/vim-prettier', {
-				\ 'do': 'yarn install',
-				\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact'] }
-
-
-  " git差分を左側に表示する
-	Plug 'airblade/vim-gitgutter'
-	"" git操作
-	" g]で前の変更箇所へ移動する
-	nnoremap g[ :GitGutterPrevHunk<CR>
-	" g[で次の変更箇所へ移動する
-	nnoremap g] :GitGutterNextHunk<CR>
-	" ghでdiffをハイライトする
-	nnoremap gh :GitGutterLineHighlightsToggle<CR>
-	" gpでカーソル行のdiffを表示する
-	nnoremap gp :GitGutterPreviewHunk<CR>
-	" 記号の色を変更する
-	highlight GitGutterAdd ctermfg=green
-	highlight GitGutterChange ctermfg=blue
-	highlight GitGutterDelete ctermfg=red
-	"" 反映時間を短くする(デフォルトは4000ms)
-	set updatetime=250
-
-	Plug 'sheerun/vim-polyglot'
-
-	" Terraform
-	Plug 'prabirshrestha/async.vim'
-	Plug 'prabirshrestha/vim-lsp'
-	Plug 'prabirshrestha/asyncomplete.vim'
-	Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-	Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
-	if executable('terraform-lsp')
-		au User lsp_setup call lsp#register_server({
-					\ 'name': 'terraform-lsp',
-					\ 'cmd': {server_info->['terraform-lsp']},
-					\ 'whitelist': ['terraform','tf'],
-					\ })
-	endif
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Terraform
+Plug 'hashivim/vim-terraform', { 'for': 'terraform'}
 call plug#end()
 
+let g:tex_flavor='latex'
+let g:fern#default_hidden=1 " ファイルツリーを表示/非表示する
+nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
+" アイコンに色をつける
+augroup my-glyph-palette
+	autocmd! *
+	autocmd FileType fern call glyph_palette#apply()
+autocmd BufWritePre <buffer> LspDocumentFormatSync
+colorscheme codedark
+set background=dark
+if executable('terraform-lsp')
+	au User lsp_setup call lsp#register_server({
+				\ 'name': 'terraform-lsp',
+				\ 'cmd': {server_info->['terraform-lsp']},
+				\ 'whitelist': ['terraform','tf'],
+				\ })
+endif
+
+
+let g:airline_theme = 'codedark'
+set t_Co=256
+
+" BufExplorer
+" * <CR> ... 選択されたバッファをアクティブに
+" * f ... 選択されたバッファを水平分割
+" * v ... 選択されたバッファを垂直分割
+" * t ... 選択されたバッファを別タブページに
+" * d ... 選択されたバッファを削除
+" * q ... BufExplorerを終了
+
+let g:fern#renderer = 'nerdfont'
 " vim-prettier
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 
+" git操作
+" usage:
+"     g]: 前の変更箇所へ移動する
+"     g[: 次の変更箇所へ移動する
+"     gh: diffをハイライトする
+"     gp: カーソル行のdiffを表示する
+nnoremap g[ :GitGutterPrevHunk<CR>
+nnoremap g] :GitGutterNextHunk<CR>
+nnoremap gh :GitGutterLineHighlightsToggle<CR>
+nnoremap gp :GitGutterPreviewHunk<CR>
+
+" 記号の色を変更する
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=blue
+highlight GitGutterDelete ctermfg=red
+let g:ale_set_highlights = 0
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fixers.python = ['black']
+let g:ale_linters = {}
+let g:ale_linters.python = ['black']
+
+" 'gcc'で一括コメントアウト
+autocmd FileType apache setlocal commentstring=#\ %s
+autocmd FileType vim setlocal foldmethod=marker
+fun! FzfOmniFiles()
+	let is_git = system('git status')
+	if v:shell_error
+		:Files
+	else
+		:GFiles
+	endif
+endfun
+nnoremap <C-p> :call FzfOmniFiles()<CR>
+
+" Ctrl+gで文字列検索を開く
+" fernなどでファイルを開いた時にも.gitから検索してくれる
+command! -bang -nargs=* Rg
+			\ call fzf#vim#grep(
+			\	"rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1,
+			\ {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0
+			\ )
+
+nnoremap <C-g> :Rg<CR>
+" fr: カーソル位置の単語をファイル検索する
+" fr: 選択した単語をファイル検索する
+" fb: バッファ検索を開く
+" fp: バッファの中で1つ前に開いたファイルを開く
+" fl: 開いているファイルの文字列検索を開く
+" fm: マーク検索を開く
+" fh: ファイル閲覧履歴検索を開く
+" fc: コミット履歴検索を開く
+nnoremap fr vawy:Rg <C-R>"<CR>
+nnoremap fr y:Rg <C-R>"<CR>
+nnoremap fb :Buffers<CR>
+nnoremap fp :Buffers<CR><CR>
+nnoremap fl :BLines<CR>
+nnoremap fm :Marks<CR>
+nnoremap fh :History<CR>
+nnoremap fc :Commits<CR>
+
+"" 反映時間を短くする(デフォルトは4000ms)
+set updatetime=0
 " カラースキーム編集用
 " ハイライトグループを知るコマンド:SyntaxInfoを実装
 function! s:get_syn_id(transparent)
@@ -424,12 +372,6 @@ endfunction
 command! SyntaxInfo call s:get_syn_info()
 
 
-set t_Co=256
-" colorscheme medic_chalk
-" colorscheme simpleblack
-" colorscheme molokai
-colorscheme codedark
-" colorscheme panic
 
 " syntax
 syntax enable " 構文に色を付ける
@@ -441,19 +383,6 @@ highlight Normal ctermbg=black ctermfg=grey
 " highlight CursorLine term=none cterm=none ctermfg=black ctermbg=gray
 highlight StatusLine term=none cterm=none ctermfg=black ctermbg=cyan
 highlight Comment ctermfg=lightyellow
-
-" Plugin Settings
-" if &term =~ "xterm"
-" 	let &t_SI .= "\e[?2004h"
-" 	let &t_EI .= "\e[?2004l"
-" 	let &pastetoggle = "\e[201~"
-" 	function XTermPasteBegin(ret)
-" 		set paste
-" 		return a:ret
-" 	endfunction
-" 	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-" endif
-
 
 " keymapping
 map <Up> <Nop>
@@ -495,6 +424,8 @@ nmap sq :wq!<Return>
 " terminal
 nnoremap <Leader>v :vertical terminal<CR>
 
+nnoremap <Leader>f :PrettierAsync<CR>
+
 " move windows
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>k <C-w>k
@@ -515,9 +446,7 @@ nnoremap <Leader>s :set spell<CR>
 nnoremap <Leader>sn :set nospell<CR>
 
 " Netrw
-nnoremap <Leader>e :Explore<CR>
-nnoremap <Leader>S :Sexplore<CR>
-nnoremap <Leader>V :Vexplore<CR>
+nnoremap <Leader>e :Vexplore<CR>
 
 " BufExplorer
 " Leader bでバッファ表示
@@ -560,20 +489,13 @@ nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
 nnoremap j gj
 nnoremap k gk
 
+" 折り返しがあったときにも一行ずつ移動する
+nnoremap <C-j> j 15
+nnoremap <C-k> k 15
+
 " 行頭への移動
 noremap <S-h> 0
 noremap <S-l> $
 
 " Yでキャレット行末までヤンクする
 nnoremap Y y$
-
-" 'gcc'で一括コメントアウト
-autocmd FileType apache setlocal commentstring=#\ %s
-autocmd FileType vim setlocal foldmethod=marker
-
-"===============================
-
-" Local Configuration
-" call SourceSafe('~/.vimrc.local')
-
-"===============================
