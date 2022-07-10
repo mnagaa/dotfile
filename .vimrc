@@ -515,9 +515,9 @@ nnoremap <Leader>s :set spell<CR>
 nnoremap <Leader>sn :set nospell<CR>
 
 " Netrw
-nnoremap <Leader>e :Explore<CR>
-nnoremap <Leader>S :Sexplore<CR>
-nnoremap <Leader>V :Vexplore<CR>
+nnoremap <Leader>e :Vexplore<CR>
+" nnoremap <Leader>S :Sexplore<CR>
+" nnoremap <Leader>V :Vexplore<CR>
 
 " BufExplorer
 " Leader bでバッファ表示
@@ -560,8 +560,8 @@ nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
 nnoremap j gj
 nnoremap k gk
 
-nnoremap J j 15
-nnoremap K k 15
+nnoremap <C-j> j 15
+nnoremap <C-k> k 15
 
 " 行頭への移動
 noremap <S-h> 0
