@@ -319,13 +319,13 @@ call plug#begin('~/.vim/plugged')
 	Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 	let g:fern#renderer = 'nerdfont'
 	" file treeのiconに色を付ける
-	" Plug 'lambdalisue/glyph-palette.vim'
-	" " アイコンに色をつける
-	" augroup my-glyph-palette
-	" 	autocmd! *
-	" 	autocmd FileType fern call glyph_palette#apply()
-	" 	autocmd FileType nerdtree,startify call glyph_palette#apply()
-	" augroup END
+	Plug 'lambdalisue/glyph-palette.vim'
+	" アイコンに色をつける
+	augroup my-glyph-palette
+		autocmd! *
+		autocmd FileType fern call glyph_palette#apply()
+		autocmd FileType nerdtree,startify call glyph_palette#apply()
+	augroup END
 
 	" カラースキームを調べる
 	Plug 'guns/xterm-color-table.vim'
@@ -425,11 +425,7 @@ command! SyntaxInfo call s:get_syn_info()
 
 
 set t_Co=256
-" colorscheme medic_chalk
-" colorscheme simpleblack
-" colorscheme molokai
 colorscheme codedark
-" colorscheme panic
 
 " syntax
 syntax enable " 構文に色を付ける
