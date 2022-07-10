@@ -560,6 +560,9 @@ nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
 nnoremap j gj
 nnoremap k gk
 
+nnoremap J j 15
+nnoremap K k 15
+
 " 行頭への移動
 noremap <S-h> 0
 noremap <S-l> $
