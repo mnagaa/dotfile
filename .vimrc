@@ -12,59 +12,56 @@ execute 'set langmenu='.$LANG
 
 " Encode Settings
 set encoding=utf-8 fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,sjis,latin1 " 読み込み時の文字コードの自動判別. 左側が優先される
-set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
-set ambiwidth=double " □や○文字が崩れる問題を解決
+" 読み込み時の文字コードの自動判別. 左側が優先される
+set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,sjis,latin1
+" 改行コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac
+" □や○文字が崩れる問題を解決
+set ambiwidth=double
 scriptencoding utf-8
 
 " 最終行を追加する設定
-set eol
-set nofixendofline
+set eol nofixendofline
 
 " カッコ・タグの対応
-set matchtime=1       " 括弧の対を見つけるミリ秒数
-set matchpairs& matchpairs+=<:>,(:),{:},[:],  " マッチさせるかっこの設定
-source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
+" 括弧の対を見つけるミリ秒数
+set matchtime=1
+" マッチさせるかっこの設定
+set matchpairs& matchpairs+=<:>,(:),{:},[:],
+" Vimの「%」を拡張する
+source $VIMRUNTIME/macros/matchit.vim
 
 " BASE SETTING
 set backspace=start,eol,indent "backspaceの設定"
 set whichwrap=b,s,[,],,~ "カーソルキーの設定"
 set wildmenu wildmode=list:full"補完の設定"
 
-" insert mode to ESCを早くする
-set ttimeoutlen=5
-
 " spellcheck
-set spell
 set spelllang=en,cjk
+set nospell
 
 " 表示関係
 filetype plugin indent on
 
 set re=0
-set nolist nowrap colorcolumn=120
+set nolist wrap colorcolumn=120
 set linebreak
 set nrformats-=octal
-
-" insert modeの時に四角のカーソルにする
-let &t_SI .= "\e[5 q"
-let &t_EI .= "\e[1 q"
 
 set hidden history=50 virtualedit=block
 
 "ステータスラインの表示"
-" set laststatus=2
-" set statusline=%F%r%h%=
+set laststatus=2
+set statusline=%F
 set tabstop=2 softtabstop=2 autoindent smartindent expandtab shiftwidth=2
 
 set wildmenu
 set wildmode=longest,list,full
 
-set autochdir
+" set autochdir
 
 " 検索関連
 set wrapscan   " 最後まで検索したら先頭へ戻る
-"set nowrapscan " 最後まで検索しても先頭に戻らない
 set ignorecase " 大文字小文字無視
 set smartcase  " 大文字ではじめたら大文字小文字無視しない
 set incsearch  " インクリメンタルサーチ
@@ -75,7 +72,7 @@ setlocal complete=.,w,b,u,t
 set complete-=i
 
 " ファイル関連
-"set nobackup   " バックアップ取らない
+set nobackup   " バックアップ取らない
 set autoread   " 他で書き換えられたら自動で読み直す
 set noswapfile " スワップファイル作らない
 set hidden     " 編集中でも他のファイルを開けるようにする
@@ -116,9 +113,7 @@ set novisualbell
 
 " Display Settings
 " ColorScheme
-if has('syntax') && !exists('g:syntax_on')
-	syntax enable " シンタックスカラーリングオン
-endif
+syntax enable " シンタックスカラーリングオン
 set t_Co=256
 set background=dark
 
@@ -132,7 +127,6 @@ if colorterm=='truecolor' || colorterm=='24bit' || colorterm==''
 	endif
 endif
 
-set display=lastline  " 長い行も一行で収まるように
 set showmatch         " 括弧の対応をハイライト
 set showcmd           " 入力中のコマンドを表示
 set number            " 行番号表示
@@ -142,13 +136,7 @@ set ruler
 "set listchars=tab:>  " 不可視文字の表示方法
 set title           " タイトル書き換えない
 
-if !&scrolloff
-	set scrolloff=5
-endif
-if !&sidescrolloff
-	set sidescrolloff=5
-endif
-set pumheight=10      " 補完候補の表示数
+set pumheight=20      " 補完候補の表示数
 
 " 折りたたみ設定
 "set foldmethod=marker
@@ -157,26 +145,12 @@ set foldlevel=1
 set foldlevelstart=99
 set foldcolumn=0
 
-function! WrapForTmux(s)
-	if !exists('$TMUX')
-		return a:s
-	endif
-
-	let tmux_start = "\<Esc>Ptmux;"
-	let tmux_end = "\<Esc>\\"
-
-	return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-
 
 " ============================
 "    Plugins
 " ============================
 
 let mapleader = "\<Space>"
-
-
 
 if has('vim_starting')
 	" setting for vim-plug
@@ -271,24 +245,18 @@ call plug#begin('~/.vim/plugged')
 	Plug 'gorodinskiy/vim-coloresque'
 	Plug 'djoshea/vim-autoread'
 	Plug 'ParamagicDev/vim-medic_chalk'
-
+	Plug 'psf/black', { 'branch': 'stable' }
 	" 同期しながらsyntax checkできるが
 	Plug 'dense-analysis/ale'
 
-	" Python
-	Plug 'psf/black', { 'branch': 'stable' }
-	augroup black_on_save
-		autocmd!
-		autocmd BufWritePre *.py Black
-	augroup end
-
 	" dense-analysis/ale
 	let g:ale_set_highlights = 0
-	let g:ale_linters = {'python': ['flake8']}
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+	let g:ale_fix_on_save = 1
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 	let g:ale_fixers.python = ['black']
-	let g:ale_fix_on_save = 1
+	let g:ale_linters = {}
+	let g:ale_linters.python = ['black']
 
 	Plug 'ntpeters/vim-better-whitespace'
 
@@ -303,8 +271,8 @@ call plug#begin('~/.vim/plugged')
 
 	" vim-airline
 	" setting for statusbar
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+	" Plug 'vim-airline/vim-airline'
+	" Plug 'vim-airline/vim-airline-themes'
 	" let g:airline#extensions#tabline#enabled = 1
 	" ステータスラインに表示する項目を変更する
 	" let g:airline#extensions#default#layout = [
@@ -412,13 +380,6 @@ call plug#end()
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 
-
-" Python用. 構文エラーチェックにpep8とpyflakesを使用
-" 保存時に自動でチェック
-let g:PyFlakeOnWrite=1
-let g:PyFlakeCheckers='pep8,mccabe,pyflakes'
-let g:PyFlakeDefaultComplexity=10
-
 " カラースキーム編集用
 " ハイライトグループを知るコマンド:SyntaxInfoを実装
 function! s:get_syn_id(transparent)
@@ -463,11 +424,7 @@ command! SyntaxInfo call s:get_syn_info()
 
 
 set t_Co=256
-" colorscheme medic_chalk
-" colorscheme simpleblack
-" colorscheme molokai
 colorscheme codedark
-" colorscheme panic
 
 " syntax
 syntax enable " 構文に色を付ける
@@ -481,16 +438,16 @@ highlight StatusLine term=none cterm=none ctermfg=black ctermbg=cyan
 highlight Comment ctermfg=lightyellow
 
 " Plugin Settings
-if &term =~ "xterm"
-	let &t_SI .= "\e[?2004h"
-	let &t_EI .= "\e[?2004l"
-	let &pastetoggle = "\e[201~"
-	function XTermPasteBegin(ret)
-		set paste
-		return a:ret
-	endfunction
-	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-endif
+" if &term =~ "xterm"
+" 	let &t_SI .= "\e[?2004h"
+" 	let &t_EI .= "\e[?2004l"
+" 	let &pastetoggle = "\e[201~"
+" 	function XTermPasteBegin(ret)
+" 		set paste
+" 		return a:ret
+" 	endfunction
+" 	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+" endif
 
 
 " keymapping
@@ -545,11 +502,17 @@ nnoremap <C-w><C-l> <C-w>l
 
 nnoremap <Leader><Left> <C-w>h
 nnoremap <Leader><Right> <C-w>l
+nnoremap <Leader><Up> <C-w>k
+nnoremap <Leader><Down> <C-w>j
+
+" spell
+nnoremap <Leader>s :set spell<CR>
+nnoremap <Leader>sn :set nospell<CR>
 
 " Netrw
-nnoremap <Leader>e :Explore<CR>
-nnoremap <Leader>S :Sexplore<CR>
-nnoremap <Leader>V :Vexplore<CR>
+nnoremap <Leader>e :Vexplore<CR>
+" nnoremap <Leader>S :Sexplore<CR>
+" nnoremap <Leader>V :Vexplore<CR>
 
 " BufExplorer
 " Leader bでバッファ表示
@@ -567,7 +530,7 @@ nnoremap <Leader>b :BufExplorerHorizontalSplit<CR>
 " * :so $<CR> ... 現在のファイルを再ロード
 
 " vimrcを開く
-nnoremap <Leader>ev :tabe ~/dotfile/.vimrc<CR>
+nnoremap <Leader>ev :vsplit ~/dotfile/.vimrc<CR>
 
 " Switch tab
 nmap th :tabprev<Return>
@@ -577,6 +540,8 @@ nmap tl :tabnext<Return>
 nmap tn :tabnew .<Return>
 nmap te :tabe .<Return>
 
+nnoremap gh gT
+nnoremap gl gt
 " change `redo` command with shift + u
 nmap <S-u> <C-r>
 
@@ -589,6 +554,9 @@ nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
 " 折り返しがあったときにも一行ずつ移動する
 nnoremap j gj
 nnoremap k gk
+
+nnoremap <C-j> j 15
+nnoremap <C-k> k 15
 
 " 行頭への移動
 noremap <S-h> 0
