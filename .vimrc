@@ -271,7 +271,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'gorodinskiy/vim-coloresque'
 	Plug 'djoshea/vim-autoread'
 	Plug 'ParamagicDev/vim-medic_chalk'
-	Plug 'atahabaki/archman-vim'
 
 	" 同期しながらsyntax checkできるが
 	Plug 'dense-analysis/ale'
