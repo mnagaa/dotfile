@@ -44,7 +44,7 @@ set nospell
 filetype plugin indent on
 
 set re=0
-set nolist wrap colorcolumn=120
+set nolist nowrap colorcolumn=120
 set linebreak
 set nrformats-=octal
 
@@ -254,9 +254,10 @@ call plug#begin('~/.vim/plugged')
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 	let g:ale_fix_on_save = 1
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-	let g:ale_fixers.python = ['black']
+	let g:ale_fixers.python = ['autopep8', 'black', 'isort']
 	let g:ale_linters = {}
-	let g:ale_linters.python = ['black']
+	let g:ale_linters.python = ['flake8', 'black']
+
 
 	Plug 'ntpeters/vim-better-whitespace'
 
