@@ -138,6 +138,7 @@ set_git_alias () {
   alias ggraph='git log --graph --oneline'
   alias wgraph='watch git log --graph --oneline'
   alias wgst='watch git status'
+  alias gpu='git push --set-upstream origin $(git branch --show-current)'
 }
 
 set_base_alias
@@ -151,9 +152,6 @@ gbr() {
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
