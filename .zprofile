@@ -14,7 +14,7 @@ export PATH="$PATH:${PYENV_ROOT}/bin"
 eval "$(pyenv init --path)"
 
 # python setup
-# export PYTHONPATH="$PWD:$PYTHONPATH"
+export PYTHONPATH="$PWD:$PYTHONPATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
