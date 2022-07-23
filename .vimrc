@@ -38,7 +38,7 @@ set wildmenu wildmode=list:full"補完の設定"
 
 " spellcheck
 set spelllang=en,cjk
-set nospell
+set spell
 
 " 表示関係
 filetype plugin indent on
@@ -507,8 +507,9 @@ nnoremap <Leader><Up> <C-w>k
 nnoremap <Leader><Down> <C-w>j
 
 " spell
-nnoremap <Leader>s :set spell<CR>
-nnoremap <Leader>sn :set nospell<CR>
+" [s or s] ... jump
+" z= ... 正しいspellの候補
+nnoremap <Leader>s :set invspell<CR>
 
 " Netrw
 nnoremap <Leader>e :Vexplore<CR>
