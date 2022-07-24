@@ -526,6 +526,7 @@ nnoremap <Leader>b :BufExplorerHorizontalSplit<CR>
 " jump
 " * Ctrl-] ... トピックへジャンプ
 " * Ctrl-o ... ジャンプ元に戻る
+ nnoremap <expr> <C-]> execute('LspPeekDefinition') =~ "not supported" ? "\<C-]>" : ":LspDefinition<cr>"
 
 " info
 " * K ... カーソル上の単語のマニュアルを開く
