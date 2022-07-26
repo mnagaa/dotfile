@@ -491,6 +491,12 @@ nmap sq :wq!<Return>
 " terminal
 nnoremap <Leader>v :vertical terminal<CR>
 
+" lazygit
+nnoremap <Leader>g :vert term ++close lazygit<CR>
+
+
+
+
 " move windows
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>k <C-w>k
