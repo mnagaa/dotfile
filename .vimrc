@@ -494,8 +494,10 @@ nnoremap <Leader>v :vertical terminal<CR>
 " lazygit
 nnoremap <Leader>g :vert term ++close lazygit<CR>
 
-" REPL
-" python
+" execute current python file
+nnoremap <Leader>ep :vert term python %<CR>
+
+" REPL: python
 nnoremap <Leader>rp :vert term ++close ipython<CR>
 
 " move windows
