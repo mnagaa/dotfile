@@ -423,6 +423,8 @@ endfunction
 
 command! SyntaxInfo call s:get_syn_info()
 
+" vimで開いているファイルのディレクトリに移動
+:set autochdir
 
 set t_Co=256
 colorscheme codedark
