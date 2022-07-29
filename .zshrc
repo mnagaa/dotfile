@@ -17,6 +17,11 @@ fi
 # scriptが長くなったときに実行する
 # ==========================================
 
+# 自動compile設定
+if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+  zcompile ~/.zshrc
+fi
+
 # zplugが無ければインストール
 # $ zplug install
 if [[ ! -d $HOME/.zplug ]];then
@@ -72,9 +77,6 @@ fh () {
 # Setting for Plugin
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions zsh-completions)
 
-autoload predict-on
-# predict-on
-autoload -U compinit && compinit -u
 
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
@@ -92,10 +94,11 @@ autoload -Uz colors  # 色を使用出来るようにする
 
 source ~/.zsh/git-prompt.sh  # git-promptの読み込み
 
+autoload predict-on
 # git-completionの読み込み
 fpath=(~/.zsh $fpath)
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
-autoload -Uz compinit && compinit
+# autoload -Uz compinit && compinit
 
 # プロンプトのオプション表示設定
 export GIT_PS1_SHOWDIRTYSTATE=true
