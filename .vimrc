@@ -176,10 +176,6 @@ call plug#begin('~/.vim/plugged')
 	" Markdown with :PreviewMarkdown
 	Plug 'skanehira/preview-markdown.vim'
 
-	" LSP
-	" https://tech.fusic.co.jp/posts/2020-07-01-vim-lsp-settings/
-	Plug 'prabirshrestha/vim-lsp'
-	Plug 'mattn/vim-lsp-settings'
 
 	" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 	Plug 'junegunn/vim-easy-align'
@@ -195,9 +191,8 @@ call plug#begin('~/.vim/plugged')
 	"" Using a non-default branch
 	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 	" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-	" Plug 'fatih/vim-go', { 'tag': '*' }
+	Plug 'fatih/vim-go'
 	" Plugin options
-	" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 	" Plugin outside ~/.vim/plugged with post-update hook
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -214,6 +209,33 @@ call plug#begin('~/.vim/plugged')
 		endif
 	endfun
 	nnoremap <C-p> :call FzfOmniFiles()<CR>
+
+	Plug 'chrisbra/csv.vim'
+	if exists("did_load_csvfiletype")
+		finish
+	endif
+	let did_load_csvfiletype=1
+	autocmd BufNewFile,BufRead *.CSV let b:csv_headerline=0
+	autocmd BufNewFile,BufRead *.CSV set filetype=csv
+
+	autocmd BufNewFile,BufRead *.SSV let g:csv_delim=' '
+	autocmd BufNewFile,BufRead *.SSV let b:csv_headerline=0
+	autocmd BufNewFile,BufRead *.SSV set filetype=csv
+
+	autocmd BufNewFile,BufRead *.ssv let g:csv_delim=' '
+	autocmd BufNewFile,BufRead *.ssv let b:csv_headerline=0
+	autocmd BufNewFile,BufRead *.ssv set filetype=csv
+
+	autocmd BufNewFile,BufRead *.TAG let g:csv_delim=' '
+	autocmd BufNewFile,BufRead *.TAG set filetype=csv
+
+	autocmd BufNewFile,BufRead *.TSV let g:csv_no_conceal=1
+	autocmd BufNewFile,BufRead *.TSV set tabstop=20
+	autocmd BufNewFile,BufRead *.TSV set filetype=csv
+
+	autocmd BufNewFile,BufRead *.tsv let g:csv_no_conceal=1
+	autocmd BufNewFile,BufRead *.tsv set tabstop=20
+	autocmd BufNewFile,BufRead *.tsv set filetype=csv
 
 	" Ctrl+gで文字列検索を開く
 	" fernなどでファイルを開いた時にも.gitから検索してくれる
@@ -247,7 +269,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'ParamagicDev/vim-medic_chalk'
 	Plug 'psf/black', { 'branch': 'stable' }
 	" 同期しながらsyntax checkできるが
-	Plug 'dense-analysis/ale'
+	" Plug 'dense-analysis/ale'
 
 	" dense-analysis/ale
 	let g:ale_set_highlights = 0
@@ -340,7 +362,6 @@ call plug#begin('~/.vim/plugged')
 				\ 'do': 'yarn install',
 				\ 'for': ['javascript', 'typescript', 'typescriptreact', 'javascriptreact'] }
 
-
   " git差分を左側に表示する
 	Plug 'airblade/vim-gitgutter'
 	"" git操作
@@ -361,13 +382,27 @@ call plug#begin('~/.vim/plugged')
 
 	Plug 'sheerun/vim-polyglot'
 
-	" Terraform
-	Plug 'prabirshrestha/async.vim'
+	" LSP
+	" https://tech.fusic.co.jp/posts/2020-07-01-vim-lsp-settings/
 	Plug 'prabirshrestha/vim-lsp'
+	Plug 'mattn/vim-lsp-settings'
+	let g:lsp_async_completion = 1
+	Plug 'prabirshrestha/async.vim'
 	Plug 'prabirshrestha/asyncomplete.vim'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-	Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
+	if executable('golsp')
+		augroup LspGo
+			au!
+			autocmd User lsp_setup call lsp#register_server({
+						\ 'name': 'go-lang',
+						\ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+						\ 'whitelist': ['go'],
+						\ })
+			autocmd FileType go setlocal omnifunc=lsp#complete
+		augroup END
+	endif
+	" Terraform
+	Plug 'hashivim/vim-terraform' , {'for': 'terraform'}
 	if executable('terraform-lsp')
 		au User lsp_setup call lsp#register_server({
 					\ 'name': 'terraform-lsp',
@@ -422,9 +457,6 @@ function! s:get_syn_info()
 endfunction
 
 command! SyntaxInfo call s:get_syn_info()
-
-" vimで開いているファイルのディレクトリに移動
-:set autochdir
 
 set t_Co=256
 colorscheme codedark
@@ -498,6 +530,8 @@ nnoremap <Leader>g :vert term ++close lazygit<CR>
 
 " execute current python file
 nnoremap <Leader>ep :vert term python %<CR>
+" execute current python file
+nnoremap <Leader>eg :vert term go run %<CR>
 
 " REPL: python
 nnoremap <Leader>rp :vert term ++close ipython<CR>
@@ -582,6 +616,9 @@ nnoremap Y y$
 " 'gcc'で一括コメントアウト
 autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType vim setlocal foldmethod=marker
+
+
+" open https://google.co.jp/search\?q=${aa} -a "Google Chrome"
 
 "===============================
 

@@ -111,6 +111,7 @@ export CLICOLOR=1
 export LSCOLORS=HeFxCxDxBxegedabagaced
 
 set_base_alias () {
+  alias c='clear'
   alias ls='ls -G'
   alias ll='ls -alF'
   alias gip='curl ifconfig.io'
@@ -121,6 +122,7 @@ set_base_alias () {
   alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 
   # go
+  alias go='go1.19'
   alias wgofmt='watch gofmt -d -w .'
 }
 
@@ -155,6 +157,8 @@ gbr() {
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
+# z command
+. /opt/homebrew/etc/profile.d/z.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
