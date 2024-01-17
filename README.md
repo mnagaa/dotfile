@@ -38,3 +38,10 @@ $ make linux-setting
 2. Check: `Load prederences from custom forlder or URL.'
 
 ![setup_preference](./img/iterm_preference.png)
+
+## vim
+
+```shell
+vim
+```
+vimに入った後に`:PlugInstall`を実行する.
