@@ -165,3 +165,15 @@ gbr() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
+
+# go setting
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+# AWS setting
+export AWS_REGION="ap-northeast-1"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+eval "$(nodenv init -)"
