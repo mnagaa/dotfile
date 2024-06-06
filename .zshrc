@@ -120,6 +120,11 @@ set_base_alias () {
 
   # snowflake
   alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
+
+  # go
+  alias wgofmt='watch gofmt -d -w .'
+
+  alias python='python3'
 }
 
 set_git_alias () {
