@@ -11,3 +11,6 @@ molokai/
 **.plist
 
 .zshrc.zwc
+
+nodenv
+p10k

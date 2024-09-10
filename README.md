@@ -24,11 +24,11 @@ $ make linux-setting
 
 ### Install from brewfile
 
-`brew bundle`
+`make brew-install`
 
 ### Dump to brewfile
 
-`brew bundle dump`
+`make brew-dump`
 
 ## iterm2
 
