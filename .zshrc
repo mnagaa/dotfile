@@ -123,8 +123,6 @@ set_base_alias () {
 
   # go
   alias wgofmt='watch gofmt -d -w .'
-
-  alias python='python3'
 }
 
 set_git_alias () {
