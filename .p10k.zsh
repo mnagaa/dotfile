@@ -33,6 +33,7 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    git_user                # git user info
     prompt_char             # prompt symbol
   )
 
@@ -1633,6 +1634,60 @@
   typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
   typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
+
+
+  # Gitユーザー情報を表示するカスタムセグメント
+  function prompt_git_user() {
+    # gitコマンドが存在するかチェック
+    if ! command -v git >/dev/null 2>&1; then
+      return
+    fi
+
+    # 現在のディレクトリがgitリポジトリかチェック
+    local git_dir
+    git_dir=$(git rev-parse --git-dir 2>/dev/null)
+    if [[ $? -ne 0 || -z "$git_dir" ]]; then
+      return
+    fi
+
+    # gitユーザー情報を取得
+    local git_name=$(git config user.name 2>/dev/null)
+    local git_email=$(git config user.email 2>/dev/null)
+
+    # ユーザー情報が設定されていない場合は表示しない
+    if [[ -z "$git_name" && -z "$git_email" ]]; then
+      return
+    fi
+
+    # 表示テキストを構築
+    local display_text=""
+    if [[ -n "$git_name" ]]; then
+      display_text="$git_name"
+    fi
+
+    if [[ -n "$git_email" ]]; then
+      # メールアドレスの先頭5文字を取得
+      local email_prefix="${git_email:0:5}"
+      if [[ -n "$display_text" ]]; then
+        display_text="$display_text ($email_prefix...)"
+      else
+        display_text="($email_prefix...)"
+      fi
+    fi
+
+    # セグメントを表示
+    if [[ -n "$display_text" ]]; then
+      p10k segment -f 39 -i '👤' -t "$display_text"
+    fi
+  }
+
+  function instant_prompt_git_user() {
+    prompt_git_user
+  }
+
+  # Gitユーザー情報セグメントのカスタマイズ
+  typeset -g POWERLEVEL9K_GIT_USER_FOREGROUND=39
+  typeset -g POWERLEVEL9K_GIT_USER_VISUAL_IDENTIFIER_EXPANSION='👤'
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
