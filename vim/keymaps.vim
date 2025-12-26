@@ -114,4 +114,3 @@ nnoremap Y y$
 " 'gcc'で一括コメントアウト
 autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType vim setlocal foldmethod=marker
-

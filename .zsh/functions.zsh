@@ -54,8 +54,14 @@ gbr() {
 # Gitアカウント切り替え関数
 # ==========================================
 
-# git-work - 仕事用アカウントに切り替え
+# git-work - 仕事用アカウントに切り替え（現在のリポジトリのローカル設定を変更）
 git-work() {
+  # gitリポジトリ内かチェック
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "Error: gitリポジトリ内で実行してください" >&2
+    return 1
+  fi
+
   if [[ -z "$GIT_WORK_NAME" ]] || [[ -z "$GIT_WORK_EMAIL" ]]; then
     echo "Error: GIT_WORK_NAME と GIT_WORK_EMAIL が設定されていません" >&2
     echo "以下のように環境変数を設定してください:" >&2
@@ -64,20 +70,21 @@ git-work() {
     return 1
   fi
 
-  git config --global user.name "$GIT_WORK_NAME"
-  git config --global user.email "$GIT_WORK_EMAIL"
+  git config --local user.name "$GIT_WORK_NAME"
+  git config --local user.email "$GIT_WORK_EMAIL"
   echo "✓ Gitアカウントを仕事用に切り替えました"
   echo "  Name:  $GIT_WORK_NAME"
   echo "  Email: $GIT_WORK_EMAIL"
-
-  # Powerlevel10kのプロンプトを再描画
-  if command -v p10k >/dev/null 2>&1; then
-    p10k reload 2>/dev/null || true
-  fi
 }
 
-# git-personal - プライベート用アカウントに切り替え
+# git-personal - プライベート用アカウントに切り替え（現在のリポジトリのローカル設定を変更）
 git-personal() {
+  # gitリポジトリ内かチェック
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "Error: gitリポジトリ内で実行してください" >&2
+    return 1
+  fi
+
   if [[ -z "$GIT_PERSONAL_NAME" ]] || [[ -z "$GIT_PERSONAL_EMAIL" ]]; then
     echo "Error: GIT_PERSONAL_NAME と GIT_PERSONAL_EMAIL が設定されていません" >&2
     echo "以下のように環境変数を設定してください:" >&2
@@ -86,27 +93,33 @@ git-personal() {
     return 1
   fi
 
-  git config --global user.name "$GIT_PERSONAL_NAME"
-  git config --global user.email "$GIT_PERSONAL_EMAIL"
+  git config --local user.name "$GIT_PERSONAL_NAME"
+  git config --local user.email "$GIT_PERSONAL_EMAIL"
   echo "✓ Gitアカウントをプライベート用に切り替えました"
   echo "  Name:  $GIT_PERSONAL_NAME"
   echo "  Email: $GIT_PERSONAL_EMAIL"
-
-  # Powerlevel10kのプロンプトを再描画
-  if command -v p10k >/dev/null 2>&1; then
-    p10k reload 2>/dev/null || true
-  fi
 }
 
-# git-account - 現在のGitアカウント情報を表示
+# git-account - 現在のGitアカウント情報を表示（ローカル設定を優先）
 git-account() {
-  local current_name current_email
-  current_name=$(git config --global user.name)
-  current_email=$(git config --global user.email)
+  local current_name current_email scope
 
-  echo "現在のGitアカウント設定:"
-  echo "  Name:  $current_name"
-  echo "  Email: $current_email"
+  # ローカル設定を優先して取得
+  current_name=$(git config --local user.name 2>/dev/null)
+  current_email=$(git config --local user.email 2>/dev/null)
+
+  if [[ -n "$current_name" || -n "$current_email" ]]; then
+    scope="(ローカル)"
+  else
+    # ローカル設定がなければグローバル設定を使用
+    current_name=$(git config --global user.name 2>/dev/null)
+    current_email=$(git config --global user.email 2>/dev/null)
+    scope="(グローバル)"
+  fi
+
+  echo "現在のGitアカウント設定 $scope:"
+  echo "  Name:  ${current_name:-未設定}"
+  echo "  Email: ${current_email:-未設定}"
   echo ""
   echo "利用可能なコマンド:"
   echo "  git-work     - 仕事用アカウントに切り替え"

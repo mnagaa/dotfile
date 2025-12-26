@@ -1650,9 +1650,17 @@
       return
     fi
 
-    # gitユーザー情報を取得
-    local git_name=$(git config user.name 2>/dev/null)
-    local git_email=$(git config user.email 2>/dev/null)
+    # gitユーザー情報を取得（ローカル設定を優先）
+    local git_name=$(git config --local user.name 2>/dev/null)
+    local git_email=$(git config --local user.email 2>/dev/null)
+
+    # ローカル設定がない場合はグローバル設定を使用
+    if [[ -z "$git_name" ]]; then
+      git_name=$(git config --global user.name 2>/dev/null)
+    fi
+    if [[ -z "$git_email" ]]; then
+      git_email=$(git config --global user.email 2>/dev/null)
+    fi
 
     # ユーザー情報が設定されていない場合は表示しない
     if [[ -z "$git_name" && -z "$git_email" ]]; then

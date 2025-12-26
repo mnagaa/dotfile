@@ -133,4 +133,3 @@ set foldcolumn=0
 
 " ウィンドウ関連
 set splitbelow splitright
-
