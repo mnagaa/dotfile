@@ -41,14 +41,14 @@ zplug "zsh-users/zsh-completions"
 zplug romkatv/powerlevel10k, as:theme, depth:1
 
 # Install plugins if there are plugins that have not been installed
-# 高速化のため、キャッシュを活用
-if ! zplug check --quiet; then
+# 高速化のため、キャッシュを活用（出力を抑制してinstant promptと競合を回避）
+if ! zplug check 2>/dev/null; then
     # 非対話モードで自動インストール（起動時の遅延を削減）
     zplug install
 fi
 # Then, source plugins and add commands to $PATH
-# 高速化のため、キャッシュを活用
-zplug load --verbose 2>/dev/null || zplug load
+# 出力を完全に抑制（Powerlevel10k instant promptとの競合を回避）
+zplug load 2>/dev/null
 
 # ==========================================
 # zsh-autosuggestionsの設定最適化
@@ -62,9 +62,15 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 # ==========================================
 # zsh-history-substring-searchのキーバインド設定
 # ==========================================
-# 上下矢印キーで履歴検索
+# 上下矢印キーで履歴検索（複数のエスケープシーケンスに対応）
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+# iTerm2やその他のターミナル用の代替キーバインド
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
+# terminfoを使用した汎用的なキーバインド
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down
 # vimモードでも動作するように設定
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
