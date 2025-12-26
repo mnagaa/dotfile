@@ -1,6 +1,9 @@
 .zplug/
 .fzf/
-.zsh/
+# .zsh/ ディレクトリ内の自動生成ファイルのみ無視
+.zsh/git-prompt.sh
+.zsh/git-completion.bash
+.zsh/_git
 .vim/**
 .DS_Store
 .vscode/
