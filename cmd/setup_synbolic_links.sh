@@ -68,6 +68,7 @@ setup_symbolic_link .zshrc
 setup_symbolic_link .zshenv
 setup_symbolic_link .zprofile
 setup_symbolic_link .p10k.zsh
+setup_symbolic_link .zshrc.local
 log_info "zsh関連のシンボリックリンクの設定が完了しました"
 
 # git関連のシンボリックリンク
