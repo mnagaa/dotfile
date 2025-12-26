@@ -30,6 +30,10 @@ set_git_alias () {
   alias wgraph='watch git log --graph --oneline'
   alias wgst='watch git status'
   alias gpu='git push --set-upstream origin $(git branch --show-current)'
+  # Gitアカウント切り替え用エイリアス
+  alias gwork='git-work'
+  alias gpersonal='git-personal'
+  alias gaccount='git-account'
 }
 
 set_base_alias

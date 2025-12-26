@@ -59,4 +59,3 @@ if [[ -n "$GCLOUD_SDK" ]]; then
     source "$GCLOUD_SDK/completion.zsh.inc"
   fi
 fi
-

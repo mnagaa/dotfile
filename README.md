@@ -62,6 +62,40 @@ make linux-setting
 
 - `.gitconfig`: Gitの設定ファイル
 
+#### Gitアカウントの切り替え
+
+仕事用とプライベート用のGitアカウントを簡単に切り替えられます。
+
+**初期設定:**
+
+環境変数を設定します（`~/.zshrc.local`などに追加することを推奨）:
+
+```shell
+export GIT_WORK_NAME='Your Work Name'
+export GIT_WORK_EMAIL='your.work@email.com'
+export GIT_PERSONAL_NAME='Your Personal Name'
+export GIT_PERSONAL_EMAIL='your.personal@email.com'
+```
+
+**使用方法:**
+
+```shell
+# 仕事用アカウントに切り替え
+gwork
+# または
+git-work
+
+# プライベート用アカウントに切り替え
+gpersonal
+# または
+git-personal
+
+# 現在のアカウント情報を確認
+gaccount
+# または
+git-account
+```
+
 ### vim設定
 
 - `.vimrc`: Vimの設定ファイル
