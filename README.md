@@ -30,15 +30,6 @@ $ make linux-setting
 
 `brew bundle dump`
 
-## iterm2
-
-### setup
-
-1. Preferences > General > Preferences
-2. Check: `Load prederences from custom forlder or URL.'
-
-![setup_preference](./img/iterm_preference.png)
-
 ## vim
 
 ```shell

@@ -29,7 +29,3 @@ setup_synbolic_link .vimrc
 ln -s "$HOME/.vimrc" "$HOME/.ideavimrc"
 echo "[ completed ]: setup synbolic links for vim"
 
-echo "[ start ]: setup synbolic links for iterm2"
-setup_synbolic_link .iterm2_shell_integration.zsh
-echo "[ completed ]: unlink symbolic links"
-
