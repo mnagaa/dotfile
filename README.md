@@ -1,47 +1,158 @@
 # dotfile
 
+個人用のdotfile設定リポジトリです。
+
+## セットアップ方法
+
+### Mac
+
 ```shell
-$ make mac-setting
-$ make linux-setting
+make mac-setting
 ```
 
-## p10k
+または直接実行:
 
-- 変更する時
 ```shell
-> p10k configure
+./ctl_mac.sh
 ```
 
-## Vim Setup
+このスクリプトは以下の処理を実行します:
 
-### setup font
+1. **Homebrewのインストール**（未インストールの場合）
+   - Apple Silicon Macの場合は自動的にパスを追加します
 
-1. Download font file from https://github.com/yumitsu/font-menlo-extra/blob/master/Menlo-Regular-Normal.ttf.
-2. Open file and 'Install font'.
-3. Go to preference of your terminal > profile > text > font > choose 'Menro Nerd Font'
+2. **brew bundleの実行**
+   - `Brewfile`に記載されたパッケージをインストールします
 
-## Homebrew
+3. **Git補完スクリプトのダウンロード**
+   - `.zsh`ディレクトリにgit-prompt.sh、git-completion.bash、_gitをダウンロードします
 
-### Install from brewfile
+4. **シンボリックリンクの設定**
+   - zsh、git、vimの設定ファイルをホームディレクトリにリンクします
+   - 既存のファイルは自動的にバックアップされます（`~/.dotfile_backup_YYYYMMDD_HHMMSS/`）
 
-`brew bundle`
+5. **Vimのmolokaiテーマのインストール**
+   - `~/.vim/colors/molokai.vim`にインストールします
 
-### Dump to brewfile
+6. **nodenvのセットアップ**
+   - nodenvとnode-buildプラグインをインストールします
 
-`brew bundle dump`
+### Linux
 
-## iterm2
+```shell
+make linux-setting
+```
 
-### setup
+または直接実行:
 
-1. Preferences > General > Preferences
-2. Check: `Load prederences from custom forlder or URL.'
+```shell
+./ctl_linux.sh
+```
 
-![setup_preference](./img/iterm_preference.png)
+## 設定ファイルの説明
 
-## vim
+### zsh設定
+
+- `.zshrc`: zshのメイン設定ファイル
+- `.zshenv`: 環境変数の設定
+- `.zprofile`: ログイン時の設定
+- `.p10k.zsh`: Powerlevel10kの設定
+
+### git設定
+
+- `.gitconfig`: Gitの設定ファイル
+
+#### Gitアカウントの切り替え
+
+仕事用とプライベート用のGitアカウントを簡単に切り替えられます。
+
+**初期設定:**
+
+環境変数を設定します（`~/.zshrc.local`などに追加することを推奨）:
+
+```shell
+export GIT_WORK_NAME='Your Work Name'
+export GIT_WORK_EMAIL='your.work@email.com'
+export GIT_PERSONAL_NAME='Your Personal Name'
+export GIT_PERSONAL_EMAIL='your.personal@email.com'
+```
+
+**使用方法:**
+
+```shell
+# 仕事用アカウントに切り替え
+gwork
+# または
+git-work
+
+# プライベート用アカウントに切り替え
+gpersonal
+# または
+git-personal
+
+# 現在のアカウント情報を確認
+gaccount
+# または
+git-account
+```
+
+### vim設定
+
+- `.vimrc`: Vimの設定ファイル
+- `.vim`: Vimのプラグインと設定ディレクトリ
+- `.ideavimrc`: IntelliJ IDEAのVim設定（`.vimrc`へのシンボリックリンク）
+
+## その他の設定
+
+### p10k（Powerlevel10k）
+
+設定を変更する場合:
+
+```shell
+p10k configure
+```
+
+### Vimフォント設定
+
+1. フォントファイルをダウンロード: https://github.com/yumitsu/font-menlo-extra/blob/master/Menlo-Regular-Normal.ttf
+2. ファイルを開いて「フォントをインストール」を選択
+3. ターミナルの設定 > プロファイル > テキスト > フォント > 「Menlo Nerd Font」を選択
+
+### Vimプラグインのインストール
+
+初回セットアップ時:
 
 ```shell
 vim
 ```
-vimに入った後に`:PlugInstall`を実行する.
+
+Vim起動後、`:PlugInstall`を実行してプラグインをインストールします。
+
+## Homebrew
+
+### Brewfileからインストール
+
+```shell
+brew bundle
+```
+
+### Brewfileにダンプ
+
+```shell
+brew bundle dump
+```
+
+## トラブルシューティング
+
+### シンボリックリンクのエラー
+
+既存のファイルが原因でエラーが発生した場合、バックアップディレクトリ（`~/.dotfile_backup_*`）を確認してください。
+
+### nodenvが動作しない
+
+nodenvを使用するには、シェル設定（`.zshenv`または`.zprofile`）に以下を追加してください:
+
+```shell
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init - zsh)"
+```
