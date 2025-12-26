@@ -17,17 +17,37 @@ fi
 # scriptが長くなったときに実行する
 # ==========================================
 
-# 自動compile設定
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
-  zcompile ~/.zshrc
-fi
-
 # ==========================================
 # 設定ファイルの読み込み
 # ==========================================
 
 # zsh設定ファイルのディレクトリ
 ZSH_CONFIG_DIR="${ZDOTDIR:-$HOME}/.zsh"
+
+# キャッシュディレクトリの作成（高速化のため）
+[[ -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" ]] || mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+# 自動compile設定（高速化のため）
+# .zshrcと.zsh/*.zshファイルをコンパイルして読み込み速度を向上
+_zcompile_zsh_config() {
+  local config_file="$1"
+  local compiled_file="${config_file}.zwc"
+
+  # ソースファイルがコンパイル済みファイルより新しい場合、再コンパイル
+  if [[ ! -f "$compiled_file" ]] || [[ "$config_file" -nt "$compiled_file" ]]; then
+    zcompile "$config_file" 2>/dev/null
+  fi
+}
+
+# .zshrcをコンパイル
+_zcompile_zsh_config ~/.zshrc
+
+# .zshディレクトリ内の設定ファイルもコンパイル
+if [[ -d "$ZSH_CONFIG_DIR" ]]; then
+  for config_file in "$ZSH_CONFIG_DIR"/*.zsh; do
+    [[ -f "$config_file" ]] && _zcompile_zsh_config "$config_file"
+  done
+fi
 
 # 設定ファイルを安全に読み込む関数
 _load_zsh_config() {

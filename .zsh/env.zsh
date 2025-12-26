@@ -3,27 +3,37 @@
 # ==========================================
 
 # Homebrewのパスを動的に検出（Intel Mac / Apple Silicon Mac対応）
-if [[ -d /opt/homebrew ]]; then
-  # Apple Silicon Mac
-  HOMEBREW_PREFIX="/opt/homebrew"
-elif [[ -d /usr/local/Homebrew ]]; then
-  # Intel Mac
-  HOMEBREW_PREFIX="/usr/local"
-else
-  # Homebrewがインストールされていない場合、brewコマンドから検出
-  if command -v brew >/dev/null 2>&1; then
-    HOMEBREW_PREFIX=$(brew --prefix)
+# キャッシュを活用して高速化
+if [[ -z "$HOMEBREW_PREFIX" ]]; then
+  if [[ -d /opt/homebrew ]]; then
+    # Apple Silicon Mac
+    HOMEBREW_PREFIX="/opt/homebrew"
+  elif [[ -d /usr/local/Homebrew ]]; then
+    # Intel Mac
+    HOMEBREW_PREFIX="/usr/local"
+  else
+    # Homebrewがインストールされていない場合、brewコマンドから検出
+    # この処理は重いので、最後の手段として使用
+    if command -v brew >/dev/null 2>&1; then
+      HOMEBREW_PREFIX=$(brew --prefix 2>/dev/null)
+    fi
   fi
+  export HOMEBREW_PREFIX
 fi
 
-# z command
+# z command（遅延読み込みで高速化）
+# zコマンドは実際に使用するときに読み込むようにする
 if [[ -n "$HOMEBREW_PREFIX" && -f "$HOMEBREW_PREFIX/etc/profile.d/z.sh" ]]; then
-  source "$HOMEBREW_PREFIX/etc/profile.d/z.sh"
+  # zコマンドが存在しない場合のみ読み込む（既に読み込まれている場合はスキップ）
+  if ! command -v z >/dev/null 2>&1; then
+    source "$HOMEBREW_PREFIX/etc/profile.d/z.sh"
+  fi
 fi
 
 # go setting
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+# PATHの重複を防ぐ（typeset -U path PATHが.zshenvで設定されているため、直接path配列に追加）
+[[ -d "$GOPATH/bin" ]] && path=($GOPATH/bin $path)
 
 # AWS setting
 export AWS_REGION="ap-northeast-1"

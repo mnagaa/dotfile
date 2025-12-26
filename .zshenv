@@ -65,4 +65,7 @@ if [ -f "$ZHOMEDIR/.zshenv.local" ]; then
   source "$ZHOMEDIR/.zshenv.local"
 fi
 
-. "$HOME/.cargo/env"
+# Rust/Cargo環境設定（存在する場合のみ読み込み）
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
