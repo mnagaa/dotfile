@@ -5,7 +5,9 @@
 .zsh/git-completion.bash
 .zsh/_git
 .zshrc.local
-.zshrc.zwc
+# zshのコンパイル済みファイル（.zwc）をすべて無視
+*.zwc
+**/*.zwc
 .vim/**
 .DS_Store
 .vscode/
