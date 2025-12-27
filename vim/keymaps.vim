@@ -29,13 +29,8 @@ nnoremap <Leader>v :vertical terminal<CR>
 " lazygit
 nnoremap <Leader>g :vert term ++close lazygit<CR>
 
-" execute current python file
-nnoremap <Leader>ep :vert term python %<CR>
-" execute current python file
+" execute current go file
 nnoremap <Leader>eg :vert term go run %<CR>
-
-" REPL: python
-nnoremap <Leader>rp :vert term ++close ipython<CR>
 
 " move windows
 nnoremap <Leader>h <C-w>h
