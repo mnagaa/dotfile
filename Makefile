@@ -9,8 +9,5 @@ help: ## このヘルプメッセージを表示
 mac-setting: ## Mac環境のセットアップを実行（Homebrew、シンボリックリンク、Vimテーマなど）
 	zsh ctl_mac.sh
 
-linux-setting: ## Linux環境のセットアップを実行
-	bash ctl_linux.sh
-
 symbolic-link: ## シンボリックリンクのみを設定
 	bash cmd/setup_synbolic_links.sh

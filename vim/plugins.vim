@@ -119,7 +119,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'gorodinskiy/vim-coloresque'
 	Plug 'djoshea/vim-autoread'
 	Plug 'ParamagicDev/vim-medic_chalk'
-	Plug 'psf/black', { 'branch': 'stable' }
 	" 同期しながらsyntax checkできるが
 	" Plug 'dense-analysis/ale'
 
@@ -128,9 +127,7 @@ call plug#begin('~/.vim/plugged')
 	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 	let g:ale_fix_on_save = 1
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-	let g:ale_fixers.python = ['autopep8', 'black', 'isort']
 	let g:ale_linters = {}
-	let g:ale_linters.python = ['flake8', 'black']
 
 
 	Plug 'ntpeters/vim-better-whitespace'
@@ -204,10 +201,7 @@ call plug#begin('~/.vim/plugged')
 	" カラースキームを調べる
 	Plug 'guns/xterm-color-table.vim'
 
-	" Python
 	Plug 'nathanaelkane/vim-indent-guides'
-	Plug 'nvie/vim-flake8'
-	Plug 'hynek/vim-python-pep8-indent'
 	Plug 'Townk/vim-autoclose'
 
 	Plug 'prettier/vim-prettier', {

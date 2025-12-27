@@ -18,8 +18,6 @@ path=(
     $HOME/.local/bin(N-/)
     $HOME/go/bin(N-/)
     $HOME/.go/bin(N-/)
-    $HOME/.cargo/bin(N-/)
-    $HOME/.rustup/toolchains/*/bin(N-/)
     $HOME/.yarn/bin(N-/)
     $HOME/.config/yarn/global/node_modules/.bin(N-/)
     $path
@@ -63,9 +61,4 @@ if [ -f "$ZDOTDIR/.zshenv.local" ]; then
 fi
 if [ -f "$ZHOMEDIR/.zshenv.local" ]; then
   source "$ZHOMEDIR/.zshenv.local"
-fi
-
-# Rust/Cargo環境設定（存在する場合のみ読み込み）
-if [ -f "$HOME/.cargo/env" ]; then
-  . "$HOME/.cargo/env"
 fi
