@@ -37,18 +37,6 @@ make mac-setting
 6. **nodenvのセットアップ**
    - nodenvとnode-buildプラグインをインストールします
 
-### Linux
-
-```shell
-make linux-setting
-```
-
-または直接実行:
-
-```shell
-./ctl_linux.sh
-```
-
 ## 設定ファイルの説明
 
 ### zsh設定
