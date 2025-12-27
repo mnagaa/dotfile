@@ -1,7 +1,6 @@
 #======================================
 # setting path
 export PATH="$PATH:/opt/homebrew/bin/"
-export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.nodebrew/current/bin"
 
 # setup nodeenv
