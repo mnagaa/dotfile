@@ -87,9 +87,26 @@ else
     log_info "Git補完スクリプトは既に存在します（スキップ）"
 fi
 
-# シンボリックリンクの設定
-log_info "シンボリックリンクを設定します"
-bash "$DOTFILE_DIR/cmd/setup_synbolic_links.sh" "$DOTFILE_DIR"
+# chezmoiのセットアップと適用
+log_info "chezmoiでドットファイルを設定します"
+if command -v chezmoi >/dev/null 2>&1; then
+    # リポジトリをソースディレクトリとして使用
+    export CHEZMOI_SOURCE_DIR="$DOTFILE_DIR"
+    log_info "ソースディレクトリをリポジトリに設定: $DOTFILE_DIR"
+
+    # chezmoiが既に初期化されているか確認
+    if [ ! -d "$HOME/.local/share/chezmoi" ]; then
+        log_info "chezmoiを初期化します（リポジトリをソースとして使用）"
+        chezmoi init --apply
+    else
+        log_info "chezmoiは既に初期化されています。ドットファイルを適用します"
+        chezmoi apply
+    fi
+    log_info "chezmoiでのドットファイル設定が完了しました"
+else
+    log_warn "chezmoiがインストールされていません。シンボリックリンク方式で設定します"
+    bash "$DOTFILE_DIR/cmd/setup_synbolic_links.sh" "$DOTFILE_DIR"
+fi
 
 # Vimのmolokaiテーマのインストール
 log_info "Vimのmolokaiテーマをセットアップします"
