@@ -99,6 +99,65 @@ git-account
 - `.vim`: Vimのプラグインと設定ディレクトリ
 - `.ideavimrc`: IntelliJ IDEAのVim設定（`.vimrc`へのシンボリックリンク）
 
+### JankyBorders設定
+
+[JankyBorders](https://github.com/FelixKratz/JankyBorders)は、macOS用の軽量なウィンドウボーダーシステムです。アクティブなウィンドウを視覚的に強調表示します。
+
+- `~/.config/borders/bordersrc`: JankyBordersの設定ファイル
+
+#### インストール
+
+`Brewfile`に含まれているため、`brew bundle`で自動的にインストールされます。
+
+手動でインストールする場合:
+
+```shell
+brew tap FelixKratz/formulae
+brew install borders
+```
+
+#### 起動方法
+
+**設定ファイルを使用する場合:**
+
+```shell
+# 設定ファイルを適用（chezmoiを使用している場合）
+chezmoi apply
+
+# bordersを起動
+borders
+```
+
+**brew servicesでサービスとして起動:**
+
+```shell
+brew services start borders
+```
+
+**yabaiと連携する場合:**
+
+`yabairc`の最後に以下を追加:
+
+```shell
+borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &
+```
+
+#### 設定の変更
+
+設定ファイル `~/.config/borders/bordersrc` を編集することで、以下のオプションを変更できます:
+
+- `style`: ボーダーのスタイル（`round`または`square`）
+- `width`: ボーダーの幅（ピクセル単位）
+- `hidpi`: HiDPIモード（`on`または`off`）
+- `active_color`: アクティブウィンドウのボーダー色（16進数形式、例: `0xffe2e2e3`）
+- `inactive_color`: 非アクティブウィンドウのボーダー色（16進数形式、例: `0xff414550`）
+
+設定を変更した後、既に`borders`プロセスが実行中の場合は、新しい設定で`borders`を再起動すると自動的に反映されます。
+
+#### 設定ファイルの場所
+
+chezmoiで管理している場合、設定ファイルは `private_dot_config/borders/bordersrc` にあります。
+
 ## その他の設定
 
 ### p10k（Powerlevel10k）
