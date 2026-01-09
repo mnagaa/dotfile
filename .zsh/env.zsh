@@ -71,9 +71,12 @@ if command -v aqua >/dev/null 2>&1; then
 fi
 
 # direnv設定
-# direnvがインストールされている場合、自動的に環境変数を設定
+# Powerlevel10kのinstant promptとの競合を避けるため、ログ出力を抑制
 if command -v direnv >/dev/null 2>&1; then
-  eval "$(direnv hook zsh)"
+  # direnvのhook設定を実行（出力を抑制してinstant promptの警告を防ぐため）
+  eval "$(direnv hook zsh 2>/dev/null)" || eval "$(direnv hook zsh)"
+  # direnvのログ出力を抑制（環境変数で制御）
+  export DIRENV_LOG_FORMAT=""
 fi
 
 # Google Cloud SDK設定（パスを動的に検出）
