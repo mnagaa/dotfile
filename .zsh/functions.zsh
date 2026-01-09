@@ -126,4 +126,3 @@ git-account() {
   echo "  git-personal - プライベート用アカウントに切り替え"
   echo "  git-account  - 現在のアカウント情報を表示"
 }
-

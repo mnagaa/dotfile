@@ -60,6 +60,19 @@ else
     log_warn "不足しているパッケージがある場合は、後で手動でインストールしてください"
 fi
 
+# aquaのパッケージインストール
+log_info "aquaでパッケージをインストールします"
+cd "$DOTFILE_DIR"
+if command -v aqua >/dev/null 2>&1; then
+    if aqua install -a; then
+        log_info "aquaのパッケージインストールが完了しました"
+    else
+        log_warn "aquaのパッケージインストールでエラーが発生しましたが、処理を続行します"
+    fi
+else
+    log_warn "aquaがインストールされていません。brew bundleでaquaがインストールされていることを確認してください"
+fi
+
 # Git補完スクリプトのダウンロード
 ZSH_DIR="$DOTFILE_DIR/.zsh"
 if [ ! -d "$ZSH_DIR" ]; then

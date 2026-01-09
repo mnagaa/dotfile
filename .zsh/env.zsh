@@ -49,6 +49,11 @@ if command -v nodenv >/dev/null 2>&1; then
   eval "$(nodenv init -)"
 fi
 
+# aqua設定
+if command -v aqua >/dev/null 2>&1; then
+  eval "$(aqua init - zsh)"
+fi
+
 # Google Cloud SDK設定（パスを動的に検出）
 if [[ -d "$HOME/google-cloud-sdk" ]]; then
   # ホームディレクトリ直下の場合

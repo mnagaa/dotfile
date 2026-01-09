@@ -83,4 +83,6 @@ _load_zsh_config "env.zsh"        # 環境変数設定（最後に読み込む�
 # このファイルはgit管理外にすることを推奨します
 if [[ -f ~/.zshrc.local ]]; then
   source ~/.zshrc.local
-fi
+fi### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/masatoshi.nagahama/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

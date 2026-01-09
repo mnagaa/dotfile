@@ -94,6 +94,32 @@ log_info "シンボリックリンクを作成: $HOME/.ideavimrc -> $HOME/.vimrc
 ln -s "$HOME/.vimrc" "$HOME/.ideavimrc"
 log_info "vim関連のシンボリックリンクの設定が完了しました"
 
+# aqua関連のシンボリックリンク
+log_info "aqua関連のシンボリックリンクを設定します"
+AQUA_CONFIG_DIR="$HOME/.config/aqua"
+if [ ! -d "$AQUA_CONFIG_DIR" ]; then
+    mkdir -p "$AQUA_CONFIG_DIR"
+fi
+AQUA_CONFIG_FILE="$AQUA_CONFIG_DIR/aqua.yaml"
+AQUA_SOURCE_FILE="$DOTFILE_DIR/aqua.yaml"
+if [ -e "$AQUA_SOURCE_FILE" ]; then
+    if [ -e "$AQUA_CONFIG_FILE" ] || [ -L "$AQUA_CONFIG_FILE" ]; then
+        mkdir -p "$BACKUP_DIR"
+        if [ -L "$AQUA_CONFIG_FILE" ]; then
+            log_info "既存のaqua.yamlシンボリックリンクを削除: $AQUA_CONFIG_FILE"
+            rm "$AQUA_CONFIG_FILE"
+        elif [ -e "$AQUA_CONFIG_FILE" ]; then
+            log_warn "既存のaqua.yamlをバックアップ: $AQUA_CONFIG_FILE -> $BACKUP_DIR/"
+            mv "$AQUA_CONFIG_FILE" "$BACKUP_DIR/"
+        fi
+    fi
+    log_info "シンボリックリンクを作成: $AQUA_CONFIG_FILE -> $AQUA_SOURCE_FILE"
+    ln -s "$AQUA_SOURCE_FILE" "$AQUA_CONFIG_FILE"
+else
+    log_warn "aqua.yamlが存在しません: $AQUA_SOURCE_FILE（スキップ）"
+fi
+log_info "aqua関連のシンボリックリンクの設定が完了しました"
+
 if [ -d "$BACKUP_DIR" ]; then
     log_warn "バックアップは以下のディレクトリに保存されました: $BACKUP_DIR"
 fi

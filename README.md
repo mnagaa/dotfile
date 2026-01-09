@@ -24,17 +24,21 @@ make mac-setting
 2. **brew bundleの実行**
    - `Brewfile`に記載されたパッケージをインストールします
 
-3. **Git補完スクリプトのダウンロード**
+3. **aquaのパッケージインストール**
+   - `aqua.yaml`に記載されたパッケージ（主にGoツール）をインストールします
+   - Homebrewでインストールできないツールを管理します
+
+4. **Git補完スクリプトのダウンロード**
    - `.zsh`ディレクトリにgit-prompt.sh、git-completion.bash、_gitをダウンロードします
 
-4. **シンボリックリンクの設定**
+5. **シンボリックリンクの設定**
    - zsh、git、vimの設定ファイルをホームディレクトリにリンクします
    - 既存のファイルは自動的にバックアップされます（`~/.dotfile_backup_YYYYMMDD_HHMMSS/`）
 
-5. **Vimのmolokaiテーマのインストール**
+6. **Vimのmolokaiテーマのインストール**
    - `~/.vim/colors/molokai.vim`にインストールします
 
-6. **nodenvのセットアップ**
+7. **nodenvのセットアップ**
    - nodenvとnode-buildプラグインをインストールします
 
 ## 設定ファイルの説明
@@ -116,18 +120,54 @@ vim
 
 Vim起動後、`:PlugInstall`を実行してプラグインをインストールします。
 
-## Homebrew
+## パッケージ管理
 
-### Brewfileからインストール
+### Homebrew
+
+Homebrewでインストール可能なパッケージ（brew、cask、vscode拡張機能）は`Brewfile`で管理します。
+
+#### Brewfileからインストール
 
 ```shell
 brew bundle
 ```
 
-### Brewfileにダンプ
+#### Brewfileにダンプ
 
 ```shell
 brew bundle dump
+```
+
+### aqua
+
+Homebrewでインストールできないツール（主にGoツール）は`aqua.yaml`で管理します。
+
+#### aqua.yamlからインストール
+
+```shell
+aqua install -a
+```
+
+#### aqua.yamlに追加
+
+新しいツールを追加する場合は、`aqua.yaml`にパッケージを追加してから:
+
+```shell
+aqua install
+```
+
+または、特定のパッケージのみインストール:
+
+```shell
+aqua install <package-name>
+```
+
+#### aqua.yamlの更新
+
+レジストリやパッケージの更新:
+
+```shell
+aqua update
 ```
 
 ## トラブルシューティング
