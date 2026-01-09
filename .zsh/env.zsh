@@ -60,12 +60,12 @@ if command -v aqua >/dev/null 2>&1; then
   # 環境変数を設定してからaqua initを実行
   # aquaのログメッセージ（time=で始まる行）をフィルタリングしてからeval
   # 標準出力と標準エラー出力の両方を抑制（instant promptの警告を防ぐため）
-  _aqua_init_output=$(AQUA_LOG_LEVEL="$AQUA_LOG_LEVEL" aqua init - zsh 2>&1 | grep -v '^time=' || true)
+  _aqua_init_output=$(AQUA_LOG_LEVEL="$AQUA_LOG_LEVEL" aqua init zsh 2>&1 | grep -v '^time=' || true)
   if [[ -n "$_aqua_init_output" ]]; then
     eval "$_aqua_init_output" 2>/dev/null || eval "$_aqua_init_output"
   else
     # フィルタリングで何も残らなかった場合、通常の方法で実行
-    eval "$(aqua init - zsh 2>&1 | grep -v '^time=')" 2>/dev/null || eval "$(aqua init - zsh 2>/dev/null)"
+    eval "$(aqua init zsh 2>&1 | grep -v '^time=')" 2>/dev/null || eval "$(aqua init zsh 2>/dev/null)"
   fi
   unset _aqua_init_output
 fi
