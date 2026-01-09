@@ -50,8 +50,30 @@ if command -v nodenv >/dev/null 2>&1; then
 fi
 
 # aqua設定
+# Powerlevel10kのinstant promptとの競合を避けるため、ログ出力を抑制
 if command -v aqua >/dev/null 2>&1; then
-  eval "$(aqua init - zsh)"
+  # aquaのログレベルをerrorに設定（infoレベルのログを抑制）
+  # 注意: AQUA_LOG_LEVELが既に設定されている場合はその値を使用
+  if [[ -z "$AQUA_LOG_LEVEL" ]]; then
+    export AQUA_LOG_LEVEL="error"
+  fi
+  # 環境変数を設定してからaqua initを実行
+  # aquaのログメッセージ（time=で始まる行）をフィルタリングしてからeval
+  # 標準出力と標準エラー出力の両方を抑制（instant promptの警告を防ぐため）
+  _aqua_init_output=$(AQUA_LOG_LEVEL="$AQUA_LOG_LEVEL" aqua init - zsh 2>&1 | grep -v '^time=' || true)
+  if [[ -n "$_aqua_init_output" ]]; then
+    eval "$_aqua_init_output" 2>/dev/null || eval "$_aqua_init_output"
+  else
+    # フィルタリングで何も残らなかった場合、通常の方法で実行
+    eval "$(aqua init - zsh 2>&1 | grep -v '^time=')" 2>/dev/null || eval "$(aqua init - zsh 2>/dev/null)"
+  fi
+  unset _aqua_init_output
+fi
+
+# direnv設定
+# direnvがインストールされている場合、自動的に環境変数を設定
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
 fi
 
 # Google Cloud SDK設定（パスを動的に検出）
