@@ -22,7 +22,11 @@ make mac-setting
    - Apple Silicon Macの場合は自動的にパスを追加します
 
 2. **brew bundleの実行**
-   - `Brewfile`に記載されたパッケージをインストールします
+   - `Brewfile`に記載されたパッケージ（chezmoiを含む）をインストールします
+   - または、chezmoi公式インストールスクリプトを使用することもできます:
+     ```shell
+     sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <GITHUB_USERNAME>
+     ```
 
 3. **aquaのパッケージインストール**
    - `aqua.yaml`に記載されたパッケージ（主にGoツール）をインストールします
@@ -31,9 +35,10 @@ make mac-setting
 4. **Git補完スクリプトのダウンロード**
    - `.zsh`ディレクトリにgit-prompt.sh、git-completion.bash、_gitをダウンロードします
 
-5. **シンボリックリンクの設定**
-   - zsh、git、vimの設定ファイルをホームディレクトリにリンクします
-   - 既存のファイルは自動的にバックアップされます（`~/.dotfile_backup_YYYYMMDD_HHMMSS/`）
+5. **chezmoiによるドットファイルの管理**
+   - chezmoiがインストールされている場合、chezmoiを使用してドットファイルを管理します
+   - このリポジトリをchezmoiのソースディレクトリとして使用します
+   - chezmoiがインストールされていない場合は、従来のシンボリックリンク方式で設定します
 
 6. **Vimのmolokaiテーマのインストール**
    - `~/.vim/colors/molokai.vim`にインストールします
@@ -120,6 +125,132 @@ vim
 
 Vim起動後、`:PlugInstall`を実行してプラグインをインストールします。
 
+## chezmoiによるドットファイル管理
+
+このリポジトリは[chezmoi](https://www.chezmoi.io/)を使用してドットファイルを管理します。chezmoiは、ドットファイルの管理を簡単かつ安全に行うためのツールです。
+
+### なぜchezmoiを使うのか？
+
+- **シンボリックリンクよりも柔軟**: ファイルの一部だけを変更したり、環境に応じた設定を適用できます
+- **テンプレート機能**: 環境変数やOSに応じた設定を自動的に適用できます
+- **安全な管理**: 既存のファイルを自動的にバックアップし、変更前に確認できます
+- **マシン間での同期**: 複数のマシンで同じ設定を簡単に同期できます
+
+### 初回セットアップ
+
+chezmoiを使った初回セットアップには、以下の2つの方法があります:
+
+#### 方法1: このリポジトリを使用する場合（推奨）
+
+```shell
+# リポジトリをクローン
+git clone <repository-url> ~/dotfile
+cd ~/dotfile
+
+# セットアップスクリプトを実行（chezmoiも自動的にインストールされます）
+make mac-setting
+# または
+./ctl_mac.sh
+
+# または、chezmoiのみを手動で初期化する場合
+make chezmoi-init
+# または
+chezmoi init --source $(pwd) --apply
+```
+
+#### 方法2: chezmoi公式インストールスクリプトを使用する場合
+
+chezmoiの公式インストールスクリプトを使用して、GitHubリポジトリから直接インストールする場合:
+
+```shell
+# chezmoiをインストールし、GitHubリポジトリから初期化
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <GITHUB_USERNAME>
+
+# その後、このリポジトリをソースとして設定
+cd ~/dotfile
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi apply
+```
+
+**注意**: `<GITHUB_USERNAME>`は、chezmoiで管理したいGitHubリポジトリのユーザー名に置き換えてください。このリポジトリを使用する場合は、方法1を推奨します。
+
+### 日常的な使い方
+
+#### 設定ファイルを適用する
+
+```shell
+make chezmoi-apply
+# または
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi apply
+```
+
+#### 変更内容を確認する
+
+```shell
+make chezmoi-diff
+# または
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi diff
+```
+
+#### 管理状態を確認する
+
+```shell
+make chezmoi-status
+# または
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi status
+```
+
+### 新しいファイルを追加する
+
+新しいドットファイルを管理対象に追加する場合:
+
+```shell
+# 1. ホームディレクトリのファイルをchezmoiに追加
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi add ~/.newfile
+
+# 2. chezmoiが追加したファイルを確認（リポジトリ内に追加されます）
+# chezmoiはファイル名を変換します（例：.zshrc → dot_zshrc）
+git status
+
+# 3. 変更をコミット
+git add .
+git commit -m "Add .newfile"
+```
+
+**注意**: chezmoiはファイル名を変換します。ドットファイル（`.zshrc`など）は`dot_zshrc`、ディレクトリ（`.vim`など）は`dot_vim`という形式になります。
+
+### テンプレート機能の使用
+
+chezmoiはテンプレート機能をサポートしています。ファイル名に`.tmpl`拡張子を付けるか、ファイル内で`{{ }}`構文を使用できます。
+
+例: `.zshrc.local.tmpl`で環境変数を使用:
+
+```bash
+export GIT_WORK_EMAIL='{{ .gitWorkEmail }}'
+```
+
+テンプレート変数は`.chezmoi.yaml`で定義するか、環境変数として設定できます。
+
+### 既存のchezmoiリポジトリからの移行
+
+既にchezmoiで管理しているドットファイルがある場合、このリポジトリに移行するには:
+
+```shell
+# 1. 現在のchezmoiのソースディレクトリを確認
+chezmoi source-path
+
+# 2. ファイルをこのリポジトリにコピー（必要に応じて）
+# 3. このリポジトリをソースとして設定
+CHEZMOI_SOURCE_DIR=$(pwd) chezmoi apply
+```
+
+### 既存のシンボリックリンク方式への切り替え
+
+chezmoiを使わず、従来のシンボリックリンク方式を使いたい場合:
+
+```shell
+make symbolic-link
+```
+
 ## パッケージ管理
 
 ### Homebrew
@@ -172,9 +303,39 @@ aqua update
 
 ## トラブルシューティング
 
+### chezmoi関連
+
+#### chezmoiが正しく動作しない
+
+chezmoiのソースディレクトリを確認:
+
+```shell
+chezmoi source-path
+```
+
+リポジトリをソースとして設定:
+
+```shell
+chezmoi source -- $(pwd)
+```
+
+#### ファイルが適用されない
+
+chezmoiの状態を確認:
+
+```shell
+chezmoi status
+```
+
+強制的に適用:
+
+```shell
+chezmoi apply --force
+```
+
 ### シンボリックリンクのエラー
 
-既存のファイルが原因でエラーが発生した場合、バックアップディレクトリ（`~/.dotfile_backup_*`）を確認してください。
+chezmoiを使わない場合、既存のファイルが原因でエラーが発生した場合、バックアップディレクトリ（`~/.dotfile_backup_*`）を確認してください。
 
 ### nodenvが動作しない
 
