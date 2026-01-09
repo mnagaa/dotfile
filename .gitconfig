@@ -8,12 +8,27 @@
 	added = yellow
 	changed = green
 	untracked = cyan
+[branch]
+	sort = -committerdate
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
 [pull]
 	rebase = false
 [init]
 	defaultBranch = main
 [fetch]
 	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
 [diff]
 	tool = vimdiff
 [difftool]
@@ -26,8 +41,8 @@
 [url "https://"]
 	insteadOf = git://
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
