@@ -120,6 +120,32 @@ else
 fi
 log_info "aqua関連のシンボリックリンクの設定が完了しました"
 
+# borders (JankyBorders)関連のシンボリックリンク
+log_info "borders (JankyBorders)関連のシンボリックリンクを設定します"
+BORDERS_CONFIG_DIR="$HOME/.config/borders"
+if [ ! -d "$BORDERS_CONFIG_DIR" ]; then
+    mkdir -p "$BORDERS_CONFIG_DIR"
+fi
+BORDERS_CONFIG_FILE="$BORDERS_CONFIG_DIR/bordersrc"
+BORDERS_SOURCE_FILE="$DOTFILE_DIR/private_dot_config/borders/bordersrc"
+if [ -e "$BORDERS_SOURCE_FILE" ]; then
+    if [ -e "$BORDERS_CONFIG_FILE" ] || [ -L "$BORDERS_CONFIG_FILE" ]; then
+        mkdir -p "$BACKUP_DIR"
+        if [ -L "$BORDERS_CONFIG_FILE" ]; then
+            log_info "既存のbordersrcシンボリックリンクを削除: $BORDERS_CONFIG_FILE"
+            rm "$BORDERS_CONFIG_FILE"
+        elif [ -e "$BORDERS_CONFIG_FILE" ]; then
+            log_warn "既存のbordersrcをバックアップ: $BORDERS_CONFIG_FILE -> $BACKUP_DIR/"
+            mv "$BORDERS_CONFIG_FILE" "$BACKUP_DIR/"
+        fi
+    fi
+    log_info "シンボリックリンクを作成: $BORDERS_CONFIG_FILE -> $BORDERS_SOURCE_FILE"
+    ln -s "$BORDERS_SOURCE_FILE" "$BORDERS_CONFIG_FILE"
+else
+    log_warn "bordersrcが存在しません: $BORDERS_SOURCE_FILE（スキップ）"
+fi
+log_info "borders (JankyBorders)関連のシンボリックリンクの設定が完了しました"
+
 if [ -d "$BACKUP_DIR" ]; then
     log_warn "バックアップは以下のディレクトリに保存されました: $BACKUP_DIR"
 fi

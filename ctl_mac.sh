@@ -43,7 +43,13 @@ if ! command -v brew &> /dev/null; then
     # Apple Silicon Macの場合、パスを追加
     if [[ $(uname -m) == "arm64" ]]; then
         log_info "Apple Silicon Mac用のパスを追加します"
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        # .zprofileがシンボリックリンクの場合は、.zprofile.localに追記
+        if [ -L ~/.zprofile ]; then
+            log_info ".zprofileはシンボリックリンクのため、.zprofile.localに追記します"
+            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile.local
+        else
+            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        fi
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
 else

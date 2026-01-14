@@ -50,24 +50,15 @@ if command -v nodenv >/dev/null 2>&1; then
 fi
 
 # aqua設定
-# Powerlevel10kのinstant promptとの競合を避けるため、ログ出力を抑制
+# 注意: aqua init zshは設定ファイルを作成するコマンドのため、シェル初期化には使用しない
+# aquaは既にPATHに追加されているため、特別な初期化は不要
+# ログレベルを設定するのみ（Powerlevel10kのinstant promptとの競合を避けるため）
 if command -v aqua >/dev/null 2>&1; then
   # aquaのログレベルをerrorに設定（infoレベルのログを抑制）
   # 注意: AQUA_LOG_LEVELが既に設定されている場合はその値を使用
   if [[ -z "$AQUA_LOG_LEVEL" ]]; then
     export AQUA_LOG_LEVEL="error"
   fi
-  # 環境変数を設定してからaqua initを実行
-  # aquaのログメッセージ（time=で始まる行）をフィルタリングしてからeval
-  # 標準出力と標準エラー出力の両方を抑制（instant promptの警告を防ぐため）
-  _aqua_init_output=$(AQUA_LOG_LEVEL="$AQUA_LOG_LEVEL" aqua init zsh 2>&1 | grep -v '^time=' || true)
-  if [[ -n "$_aqua_init_output" ]]; then
-    eval "$_aqua_init_output" 2>/dev/null || eval "$_aqua_init_output"
-  else
-    # フィルタリングで何も残らなかった場合、通常の方法で実行
-    eval "$(aqua init zsh 2>&1 | grep -v '^time=')" 2>/dev/null || eval "$(aqua init zsh 2>/dev/null)"
-  fi
-  unset _aqua_init_output
 fi
 
 # direnv設定

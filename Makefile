@@ -23,3 +23,14 @@ chezmoi-diff: ## chezmoiで変更内容を確認
 
 chezmoi-status: ## chezmoiで管理状態を確認
 	CHEZMOI_SOURCE_DIR=$(PWD) chezmoi status
+
+borders-reload: ## JankyBordersの設定をリロード
+	@if [ -f ~/.config/borders/bordersrc ]; then \
+		echo "JankyBordersの設定をリロードしています..."; \
+		bash ~/.config/borders/bordersrc; \
+		echo "リロード完了"; \
+	else \
+		echo "エラー: ~/.config/borders/bordersrc が見つかりません"; \
+		echo "先に 'make symbolic-link' を実行してください"; \
+		exit 1; \
+	fi
