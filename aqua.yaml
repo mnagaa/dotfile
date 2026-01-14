@@ -19,7 +19,6 @@ packages:
   - name: golang.org/x/tools/gopls@v0.21.0
   - name: fullstorydev/grpcurl@v1.9.3
   - name: sqlc-dev/sqlc@v1.30.0
-  - name: bufbuild/connect-go/protoc-gen-connect-go
   - name: protocolbuffers/protobuf-go/protoc-gen-go@v1.36.11
   - name: bufbuild/protoc-gen-validate@v1.3.0
   - name: dominikh/go-tools/staticcheck@2025.1.1
