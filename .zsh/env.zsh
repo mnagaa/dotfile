@@ -38,6 +38,15 @@ export GOPATH=$HOME/go
 # AWS setting
 export AWS_REGION="ap-northeast-1"
 
+# Gitアカウント切り替え用の環境変数
+# 仕事用Gitアカウント
+export GIT_WORK_NAME='masatoshi-nagahama_sansan'
+export GIT_WORK_EMAIL='masatoshi.nagahama@sansan.com'
+
+# プライベート用Gitアカウント
+export GIT_PERSONAL_NAME='mnagaa'
+export GIT_PERSONAL_EMAIL='m.nagahama.rec@gmail.com'
+
 # Terraform補完設定
 if [[ -n "$HOMEBREW_PREFIX" && -f "$HOMEBREW_PREFIX/bin/terraform" ]]; then
   autoload -U +X bashcompinit && bashcompinit
