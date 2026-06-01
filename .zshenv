@@ -65,4 +65,6 @@ if [ -f "$ZHOMEDIR/.zshenv.local" ]; then
   source "$ZHOMEDIR/.zshenv.local"
 fi
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi

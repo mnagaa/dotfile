@@ -25,8 +25,10 @@ export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init - --no-rehash)"
 
 # java
-export JAVA_HOME=`/usr/libexec/java_home -v 11`
-export PATH="$PATH:${JAVA_HOME}/bin"
+if /usr/libexec/java_home -v 11 >/dev/null 2>&1; then
+  export JAVA_HOME=`/usr/libexec/java_home -v 11`
+  export PATH="$PATH:${JAVA_HOME}/bin"
+fi
 
 # added by Snowflake SnowSQL installer v1.2
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
