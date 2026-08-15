@@ -7,6 +7,13 @@ export ZHOMEDIR=$ZDOTDIR/.zsh
 export ZRCDIR=$ZHOMEDIR/rc
 export XDG_CONFIG_HOME=$HOME/.config
 
+# aquaのグローバル設定
+# これを設定しないと、aqua.yaml のあるディレクトリ以外では aqua 管理のツールが
+# "command is not found" になる（~/.config/aqua/aqua.yaml は自動では読まれない）
+if [ -f "$XDG_CONFIG_HOME/aqua/aqua.yaml" ]; then
+  export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME/aqua/aqua.yaml"
+fi
+
 typeset -fuz zkbd
 typeset -U path PATH manpath sudo_path
 typeset -xT SUDO_PATH sudo_path

@@ -38,6 +38,8 @@ brew "gh"
 brew "ghostscript"
 brew "git"
 brew "git-secrets"
+# aqua.yaml の gopls / goimports / dlv は go install でビルドされるため Go 本体が必要
+brew "go"
 brew "gobject-introspection"
 brew "golangci-lint"
 brew "python@3.12"
