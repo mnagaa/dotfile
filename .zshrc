@@ -84,8 +84,3 @@ _load_zsh_config "env.zsh"        # 環境変数設定（最後に読み込む�
 if [[ -f ~/.zshrc.local ]]; then
   source ~/.zshrc.local
 fi
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-# 元は特定マシンのユーザー名がハードコードされていたため $HOME 基準に変更
-[[ -d "$HOME/.rd/bin" ]] && export PATH="$HOME/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
