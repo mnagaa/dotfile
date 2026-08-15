@@ -61,11 +61,6 @@ gaccount
 - `.vimrc`: Vim設定ファイル
 - `.vim`: プラグインと設定ディレクトリ
 
-### borders
-- `~/.config/borders/bordersrc`: 設定ファイル
-
-起動: `borders` または `brew services start borders`
-
 ## chezmoi について（現状は補助的な位置づけ）
 
 chezmoiは**ソースディレクトリ内の "." 始まりのエントリを無視する**仕様のため、
@@ -77,20 +72,18 @@ chezmoiは**ソースディレクトリ内の "." 始まりのエントリを無
 - ドットファイルは一切配置されず、
 - 代わりに `README.md` / `Makefile` / `Brewfile` / `cmd/` などが `$HOME` 直下にコピーされる
 
-という状態だった。現在は `.chezmoiignore` でリポジトリ管理用ファイルを除外してあるため、
-chezmoiが実際に管理するのは `private_dot_config/` 配下（`~/.config/borders/bordersrc`）のみ。
+という状態だった。現在は `.chezmoiignore` でリポジトリ管理用ファイルを除外してある。
+
+なお borders (JankyBorders) を削除したことで `private_dot_config/` が無くなったため、
+**chezmoiが管理しているファイルは現時点でゼロ**。`.chezmoiignore` は
+`chezmoi apply` を誤って実行したときに `$HOME` が汚れるのを防ぐためだけに残している。
 
 ドットファイルの配置は `make symbolic-link` を使うこと。
 
-状態の確認のみ:
-
-```shell
-make chezmoi-diff
-make chezmoi-status
-```
-
 全面的にchezmoi管理へ移行する場合は、`.zshrc` → `dot_zshrc` のリネームと
 `cmd/setup_synbolic_links.sh` の廃止をセットで行う必要がある。
+逆にchezmoiを使わないと決めるなら、`.chezmoi.yaml` / `.chezmoiignore` と
+Makefileの `chezmoi-*` ターゲットを削除してよい。
 
 ## パッケージ管理
 

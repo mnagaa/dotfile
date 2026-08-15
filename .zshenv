@@ -25,6 +25,9 @@ path=(
     $HOME/.local/bin(N-/)
     # aquaでインストールしたCLIツール（これが無いと aqua install -a しても使えない）
     ${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin(N-/)
+    # nodenvのshims。.zshrc経由の nodenv init は対話シェルでしか走らないため、
+    # 非対話シェル（スクリプトやエディタから起動されるshell）でもnodeを使えるようにする
+    ${NODENV_ROOT:-$HOME/.nodenv}/shims(N-/)
     $HOME/go/bin(N-/)
     $HOME/.go/bin(N-/)
     $HOME/.yarn/bin(N-/)
