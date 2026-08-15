@@ -118,23 +118,19 @@ else
     log_info "molokaiテーマは既にインストールされています（スキップ）"
 fi
 
-# nodenvのセットアップ
-log_info "nodenvをセットアップします"
-if [ ! -d "$HOME/.nodenv" ]; then
-    git clone https://github.com/nodenv/nodenv.git "$HOME/.nodenv"
-
-    # nodenv-buildプラグインのインストール
-    mkdir -p "$HOME/.nodenv/plugins"
-    if [ ! -d "$HOME/.nodenv/plugins/node-build" ]; then
-        git clone https://github.com/nodenv/node-build.git "$HOME/.nodenv/plugins/node-build"
+# nodenvの確認
+# 以前はここで git clone していたが、Brewfile に nodenv / node-build があるため
+# ~/.nodenv に二重インストールされ、$HOME/.nodenv/bin が PATH 上で Homebrew 版を
+# 隠してしまっていた（brew upgrade でも更新されない）。インストールは Brewfile に任せる。
+log_info "nodenvを確認します"
+if command -v nodenv >/dev/null 2>&1; then
+    log_info "nodenv: $(command -v nodenv)"
+    if [ -d "$HOME/.nodenv/bin" ]; then
+        log_warn "$HOME/.nodenv にgit clone版のnodenvが残っています"
+        log_warn "Homebrew版を使うため、不要であれば $HOME/.nodenv/bin と plugins を削除してください"
     fi
-
-    log_info "nodenvのインストールが完了しました"
-    log_warn "nodenvを使用するには、シェル設定に以下を追加してください:"
-    log_warn "  export PATH=\"\$HOME/.nodenv/bin:\$PATH\""
-    log_warn "  eval \"\$(nodenv init - zsh)\""
 else
-    log_info "nodenvは既にインストールされています（スキップ）"
+    log_warn "nodenvがインストールされていません（brew bundleが失敗している可能性があります）"
 fi
 
 log_info "dotfileのセットアップが完了しました！"
