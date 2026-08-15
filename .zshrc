@@ -86,5 +86,6 @@ if [[ -f ~/.zshrc.local ]]; then
 fi
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/masatoshi.nagahama/.rd/bin:$PATH"
+# 元は特定マシンのユーザー名がハードコードされていたため $HOME 基準に変更
+[[ -d "$HOME/.rd/bin" ]] && export PATH="$HOME/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

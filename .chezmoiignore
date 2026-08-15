@@ -1,0 +1,17 @@
+# chezmoi の対象から除外するファイル
+#
+# 注意: chezmoi はソースディレクトリ内の "." 始まりのエントリを無視するため、
+# このリポジトリの .zshrc / .zshenv などは chezmoi では管理されない。
+# （chezmoi で管理するには dot_zshrc のようにリネームが必要）
+# 現状ドットファイルの配置は cmd/setup_synbolic_links.sh（make symbolic-link）で行う。
+#
+# 除外しないと、以下のリポジトリ管理用ファイルが $HOME 直下にコピーされてしまう。
+README.md
+Makefile
+Brewfile
+Brewfile.lock.json
+aqua.yaml
+ctl_mac.sh
+cmd
+img
+vim

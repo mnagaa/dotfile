@@ -3,7 +3,8 @@
 	name = mnagaa
 	email = m.nagahama.rec@gmail.com
 [color]
-	ui = always
+	# always はパイプ/リダイレクト時もエスケープシーケンスを出力してしまうため auto
+	ui = auto
 [color "status"]
 	added = yellow
 	changed = green
@@ -40,4 +41,10 @@
 	clean = git-lfs clean -- %f
 [url "https://"]
 	insteadOf = git://
+# GitHub は https URL でも SSH 鍵で clone/push する
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+# マシン固有の設定（git管理外）。仕事用アカウントなどはこちらに書く
+[include]
+	path = ~/.gitconfig.local
 

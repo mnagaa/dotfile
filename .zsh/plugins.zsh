@@ -4,9 +4,20 @@
 
 # zplugが無ければインストール
 # $ zplug install
-if [[ ! -d $HOME/.zplug ]];then
-  git clone https://github.com/zplug/zplug $HOME/dotfile/.zplug
-  ln -s ~/dotfile/.zplug ~/.zplug
+if [[ ! -d $HOME/.zplug ]]; then
+  # dotfileリポジトリ配下に置いてシンボリックリンクする（リポジトリが無ければ直接 ~/.zplug へ）
+  if [[ -d $HOME/dotfile ]]; then
+    git clone https://github.com/zplug/zplug $HOME/dotfile/.zplug \
+      && ln -s $HOME/dotfile/.zplug $HOME/.zplug
+  else
+    git clone https://github.com/zplug/zplug $HOME/.zplug
+  fi
+fi
+
+# zplugのインストールに失敗した場合はプラグイン設定をスキップ（シェルが壊れないように）
+if [[ ! -f $HOME/.zplug/init.zsh ]]; then
+  echo "[WARN] zplug が見つかりません: $HOME/.zplug/init.zsh" >&2
+  return 0
 fi
 
 # zplugのキャッシュを有効化（高速化）

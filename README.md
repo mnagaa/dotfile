@@ -4,7 +4,12 @@
 
 ## セットアップ
 
+前提: このリポジトリは **`~/dotfile`** にクローンすること（`.zsh/plugins.zsh` が
+`~/dotfile/.zplug` を参照するため）。
+
 ```shell
+git clone git@github.com:mnagaa/dotfile.git ~/dotfile
+cd ~/dotfile
 make mac-setting
 ```
 
@@ -15,13 +20,19 @@ make mac-setting
 ```
 
 実行内容:
-1. Homebrewのインストール（未インストールの場合）
+1. Homebrewのインストール（未インストールの場合。sudoパスワードの入力が必要）
 2. `Brewfile`からパッケージをインストール
 3. `aqua.yaml`からパッケージをインストール
 4. Git補完スクリプトのダウンロード
-5. chezmoiでドットファイルを適用
+5. ドットファイルをシンボリックリンクで配置（既存ファイルは`~/.dotfile_backup_*`に退避）
 6. Vimのmolokaiテーマをインストール
 7. nodenvのセットアップ
+
+ドットファイルの配置だけをやり直したい場合:
+
+```shell
+make symbolic-link
+```
 
 ## 設定ファイル
 
@@ -55,26 +66,31 @@ gaccount
 
 起動: `borders` または `brew services start borders`
 
-## chezmoi
+## chezmoi について（現状は補助的な位置づけ）
 
-### 基本的なコマンド
+chezmoiは**ソースディレクトリ内の "." 始まりのエントリを無視する**仕様のため、
+このリポジトリの `.zshrc` / `.zshenv` / `.gitconfig` などは chezmoi では管理されない。
+（管理するには `dot_zshrc` のようにリネームが必要）
+
+そのため `chezmoi apply` を実行しても、
+
+- ドットファイルは一切配置されず、
+- 代わりに `README.md` / `Makefile` / `Brewfile` / `cmd/` などが `$HOME` 直下にコピーされる
+
+という状態だった。現在は `.chezmoiignore` でリポジトリ管理用ファイルを除外してあるため、
+chezmoiが実際に管理するのは `private_dot_config/` 配下（`~/.config/borders/bordersrc`）のみ。
+
+ドットファイルの配置は `make symbolic-link` を使うこと。
+
+状態の確認のみ:
 
 ```shell
-# 設定を適用
-make chezmoi-apply
-
-# 変更内容を確認
 make chezmoi-diff
-
-# 管理状態を確認
 make chezmoi-status
 ```
 
-### 新しいファイルを追加
-
-```shell
-CHEZMOI_SOURCE_DIR=$(pwd) chezmoi add ~/.newfile
-```
+全面的にchezmoi管理へ移行する場合は、`.zshrc` → `dot_zshrc` のリネームと
+`cmd/setup_synbolic_links.sh` の廃止をセットで行う必要がある。
 
 ## パッケージ管理
 

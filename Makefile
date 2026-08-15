@@ -9,15 +9,20 @@ help: ## このヘルプメッセージを表示
 mac-setting: ## Mac環境のセットアップを実行（Homebrew、シンボリックリンク、Vimテーマなど）
 	zsh ctl_mac.sh
 
-symbolic-link: ## シンボリックリンクのみを設定（chezmoi未使用時）
-	bash cmd/setup_synbolic_links.sh
+symbolic-link: ## ドットファイルをシンボリックリンクで配置（配置方式はこちらが正）
+	zsh cmd/setup_synbolic_links.sh $(PWD)
 
-chezmoi-init: ## chezmoiを初期化（リポジトリをソースとして使用）
-	CHEZMOI_SOURCE_DIR=$(PWD) chezmoi init --apply
+brew-bundle: ## Brewfileのパッケージをインストール
+	brew bundle --file=$(PWD)/Brewfile
 
-chezmoi-apply: ## chezmoiでドットファイルを適用
-	CHEZMOI_SOURCE_DIR=$(PWD) chezmoi apply
+aqua-install: ## aqua.yamlのCLIツールをインストール
+	aqua install -a
 
+# --- chezmoi ---
+# 注意: このリポジトリのドットファイルは .zshrc のような "." 始まりの名前で置かれており、
+# chezmoiはソースディレクトリ内の "." 始まりエントリを無視する。そのため chezmoi が
+# 実際に管理しているのは private_dot_config 配下（~/.config/borders/bordersrc）のみ。
+# 誤って README.md などが $HOME にコピーされないよう .chezmoiignore を用意している。
 chezmoi-diff: ## chezmoiで変更内容を確認
 	CHEZMOI_SOURCE_DIR=$(PWD) chezmoi diff
 

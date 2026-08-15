@@ -40,17 +40,12 @@ if ! command -v brew &> /dev/null; then
     log_info "Homebrewをインストールします"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    # Apple Silicon Macの場合、パスを追加
-    if [[ $(uname -m) == "arm64" ]]; then
-        log_info "Apple Silicon Mac用のパスを追加します"
-        # .zprofileがシンボリックリンクの場合は、.zprofile.localに追記
-        if [ -L ~/.zprofile ]; then
-            log_info ".zprofileはシンボリックリンクのため、.zprofile.localに追記します"
-            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile.local
-        else
-            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-        fi
+    # このスクリプト内でbrewを使えるようにする
+    # （シェル起動時のPATH設定は .zprofile 側で brew shellenv を評価しているため追記不要）
+    if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
     fi
 else
     log_info "Homebrewは既にインストールされています"
@@ -80,39 +75,33 @@ else
 fi
 
 # Git補完スクリプトのダウンロード
+# 注意: .zsh ディレクトリ自体はリポジトリに含まれるため、ファイル単位で存在確認する
 ZSH_DIR="$DOTFILE_DIR/.zsh"
-if [ ! -d "$ZSH_DIR" ]; then
-    log_info "Git補完スクリプトをダウンロードします"
-    mkdir -p "$ZSH_DIR"
-    cd "$ZSH_DIR"
-    curl -fsSL -o git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-    curl -fsSL -o git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-    curl -fsSL -o _git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
-    log_info "Git補完スクリプトのダウンロードが完了しました"
-else
-    log_info "Git補完スクリプトは既に存在します（スキップ）"
-fi
-
-# chezmoiのセットアップと適用
-log_info "chezmoiでドットファイルを設定します"
-if command -v chezmoi >/dev/null 2>&1; then
-    # リポジトリをソースディレクトリとして使用
-    export CHEZMOI_SOURCE_DIR="$DOTFILE_DIR"
-    log_info "ソースディレクトリをリポジトリに設定: $DOTFILE_DIR"
-
-    # chezmoiが既に初期化されているか確認
-    if [ ! -d "$HOME/.local/share/chezmoi" ]; then
-        log_info "chezmoiを初期化します（リポジトリをソースとして使用）"
-        chezmoi init --apply
+mkdir -p "$ZSH_DIR"
+cd "$ZSH_DIR"
+GIT_COMPLETION_BASE="https://raw.githubusercontent.com/git/git/master/contrib/completion"
+for pair in "git-prompt.sh:git-prompt.sh" "git-completion.bash:git-completion.bash" "_git:git-completion.zsh"; do
+    dest="${pair%%:*}"
+    src="${pair##*:}"
+    if [ -f "$dest" ]; then
+        log_info "Git補完スクリプトは既に存在します: $dest（スキップ）"
     else
-        log_info "chezmoiは既に初期化されています。ドットファイルを適用します"
-        chezmoi apply
+        log_info "Git補完スクリプトをダウンロードします: $dest"
+        curl -fsSL -o "$dest" "$GIT_COMPLETION_BASE/$src" \
+            || log_warn "ダウンロードに失敗しました: $dest（スキップ）"
     fi
-    log_info "chezmoiでのドットファイル設定が完了しました"
-else
-    log_warn "chezmoiがインストールされていません。シンボリックリンク方式で設定します"
-    bash "$DOTFILE_DIR/cmd/setup_synbolic_links.sh" "$DOTFILE_DIR"
-fi
+done
+
+# ドットファイルの配置（シンボリックリンク方式）
+#
+# 以前はここで chezmoi apply を実行していたが、chezmoi はソースディレクトリ内の
+# "." 始まりのエントリを無視する仕様のため、このリポジトリの .zshrc / .zshenv などは
+# 一切適用されず、代わりに README.md や Makefile が $HOME にコピーされてしまっていた。
+# chezmoi で管理するには dot_zshrc のようなリネームが必要なため、
+# 現状はシンボリックリンク方式を正とする。
+log_info "ドットファイルをシンボリックリンクで配置します"
+zsh "$DOTFILE_DIR/cmd/setup_synbolic_links.sh" "$DOTFILE_DIR"
+log_info "ドットファイルの配置が完了しました"
 
 # Vimのmolokaiテーマのインストール
 log_info "Vimのmolokaiテーマをセットアップします"
