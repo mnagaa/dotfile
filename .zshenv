@@ -16,6 +16,8 @@ path=(
     $HOME/bin(N-/)
     $HOME/.bin.local(N-/)
     $HOME/.local/bin(N-/)
+    # aquaでインストールしたCLIツール（これが無いと aqua install -a しても使えない）
+    ${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin(N-/)
     $HOME/go/bin(N-/)
     $HOME/.go/bin(N-/)
     $HOME/.yarn/bin(N-/)
